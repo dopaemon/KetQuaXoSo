@@ -38,7 +38,7 @@ func Parse(data []byte) ([]Result, error) {
 		desc := normalizeDescription(it.Description)
 		prizes := parsePrizes(desc)
 
-		date := normalizeDate(it.PubDate)
+		date := extractDate(it.Title)
 		title := it.Title
 
 		prov := detectProvinceFromItemTitle(it.Title)
@@ -145,4 +145,19 @@ func titleCaseVN(s string) string {
 		}
 	}
 	return strings.Join(parts, " ")
+}
+
+func extractDate(input string) string {
+	upper := strings.ToUpper(input)
+	parts := strings.Split(upper, "NGÀY")
+	if len(parts) < 2 {
+		return ""
+	}
+	right := parts[1]
+	right = strings.TrimSpace(right)
+	end := strings.Index(right, " (")
+	if end == -1 {
+		return strings.TrimSpace(right)
+	}
+	return strings.TrimSpace(right[:end])
 }
