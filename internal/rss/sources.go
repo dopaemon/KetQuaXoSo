@@ -34,14 +34,11 @@ func Sources(tinh string) string {
 	tinh = strings.ToLower(removeTone(tinh))
 	tinh = strings.ReplaceAll(tinh, " ", "-")
 
-	parts := strings.Split(tinh, "-")
+	words := strings.Split(tinh, "-")
 	code := ""
-	for _, p := range parts {
-		if len(p) > 0 {
-			code += string(p[0])
-		}
-		if len(code) >= 2 {
-			break
+	for _, w := range words {
+		if len(w) > 0 {
+			code += string(w[0])
 		}
 	}
 

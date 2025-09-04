@@ -12,7 +12,7 @@ import (
 func main() {
 	fmt.Println(utils.Banner())
 
-	url := rss.Sources(configs.Provinces[0])
+	url := rss.Sources(configs.Provinces[31])
 	data, _ := rss.Fetch(url)
 	results, _ := rss.Parse(data)
 
