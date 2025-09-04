@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"XoSoToanQuoc/internal/configs"
 	"XoSoToanQuoc/internal/rss"
 	"XoSoToanQuoc/utils"
 )
@@ -11,7 +12,7 @@ import (
 func main() {
 	fmt.Println(utils.Banner())
 
-	url := rss.Sources("an-giang")
+	url := rss.Sources(configs.Provinces[0])
 	data, _ := rss.Fetch(url)
 	results, _ := rss.Parse(data)
 

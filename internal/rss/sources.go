@@ -1,19 +1,49 @@
 package rss
 
 import (
-	"fmt"
 	"strings"
+	"unicode"
 )
 
 func Sources(tinh string) string {
-	s := tinh
-	parts := strings.Split(s, "-")
-	var ab string
+	removeTone := func(s string) string {
+		var b strings.Builder
+		for _, r := range s {
+			switch unicode.ToLower(r) {
+			case 'á', 'à', 'ả', 'ã', 'ạ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ', 'ặ', 'â', 'ấ', 'ầ', 'ẩ', 'ẫ', 'ậ':
+				b.WriteRune('a')
+			case 'đ':
+				b.WriteRune('d')
+			case 'é', 'è', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ế', 'ề', 'ể', 'ễ', 'ệ':
+				b.WriteRune('e')
+			case 'í', 'ì', 'ỉ', 'ĩ', 'ị':
+				b.WriteRune('i')
+			case 'ó', 'ò', 'ỏ', 'õ', 'ọ', 'ô', 'ố', 'ồ', 'ổ', 'ỗ', 'ộ', 'ơ', 'ớ', 'ờ', 'ở', 'ỡ', 'ợ':
+				b.WriteRune('o')
+			case 'ú', 'ù', 'ủ', 'ũ', 'ụ', 'ư', 'ứ', 'ừ', 'ử', 'ữ', 'ự':
+				b.WriteRune('u')
+			case 'ý', 'ỳ', 'ỷ', 'ỹ', 'ỵ':
+				b.WriteRune('y')
+			default:
+				b.WriteRune(r)
+			}
+		}
+		return b.String()
+	}
+
+	tinh = strings.ToLower(removeTone(tinh))
+	tinh = strings.ReplaceAll(tinh, " ", "-")
+
+	parts := strings.Split(tinh, "-")
+	code := ""
 	for _, p := range parts {
 		if len(p) > 0 {
-			ab += string(p[0])
+			code += string(p[0])
+		}
+		if len(code) >= 2 {
+			break
 		}
 	}
-	fmt.Println(ab)
-	return "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + ab + ".rss"
+
+	return "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss"
 }
