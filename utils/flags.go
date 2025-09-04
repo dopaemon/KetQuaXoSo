@@ -3,7 +3,10 @@ package utils
 import (
 	"context"
 	"errors"
+	_ "fmt"
 	"os"
+
+	_ "XoSoToanQuoc/internal/configs"
 
 	"github.com/charmbracelet/fang"
 	"github.com/spf13/cobra"
@@ -31,7 +34,6 @@ func GenFlags() string {
 			if runCLI && runGUI {
 				return errors.New("không thể dùng đồng thời --cli và --gui")
 			}
-
 			switch {
 			case runCLI:
 				result = "cli"
@@ -52,6 +54,10 @@ func GenFlags() string {
 	cmd.CompletionOptions.DisableDefaultCmd = true
 	cmd.SetHelpCommand(&cobra.Command{Hidden: true})
 	cmd.Version = ""
+	cmd.SetVersionTemplate("")
+
+	cmd.PersistentFlags().BoolP("version", "v", false, "")
+	cmd.PersistentFlags().MarkHidden("version")
 
 	if err := fang.Execute(
 		context.Background(),
@@ -63,4 +69,3 @@ func GenFlags() string {
 
 	return result
 }
-
