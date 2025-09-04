@@ -11,6 +11,7 @@ import (
 type Result struct {
 	Province string
 	Date     string
+	Title    string
 	Prizes   map[string][]string
 }
 
@@ -38,6 +39,7 @@ func Parse(data []byte) ([]Result, error) {
 		prizes := parsePrizes(desc)
 
 		date := normalizeDate(it.PubDate)
+		title := it.Title
 
 		prov := detectProvinceFromItemTitle(it.Title)
 		if prov == "" {
@@ -47,6 +49,7 @@ func Parse(data []byte) ([]Result, error) {
 		results = append(results, Result{
 			Province: prov,
 			Date:     date,
+			Title:    title,
 			Prizes:   prizes,
 		})
 	}

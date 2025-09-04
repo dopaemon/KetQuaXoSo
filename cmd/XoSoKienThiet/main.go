@@ -7,17 +7,29 @@ import (
 	"XoSoToanQuoc/internal/configs"
 	"XoSoToanQuoc/internal/rss"
 	"XoSoToanQuoc/utils"
+
+	"github.com/charmbracelet/huh"
 )
 
 func main() {
 	fmt.Println(utils.Banner())
 
-	url := rss.Sources(configs.Provinces[31])
+	var province string
+
+	input := huh.NewInput().
+		Title("Bạn muốn xem kết quả sổ số nào ?").
+		Prompt(": ").
+		Suggestions(configs.Provinces).
+		Value(&province)
+
+	huh.NewForm(huh.NewGroup(input)).Run()
+
+	url := rss.Sources(province)
 	data, _ := rss.Fetch(url)
 	results, _ := rss.Parse(data)
 
 	for _, r := range results {
-		fmt.Println("=== ", r.Province, r.Date, " ===")
+		fmt.Println("=== ", r.Title, " ===")
 		for giai, so := range r.Prizes {
 			fmt.Println("Giải", giai+":", so)
 		}
