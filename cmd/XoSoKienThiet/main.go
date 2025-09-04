@@ -11,17 +11,16 @@ import (
 func main() {
 	fmt.Println(utils.Banner())
 
-	url := "https://xskt.com.vn/rss-feed/mien-nam-xsmn.rss"
-	items, err := rss.Fetch(url)
-	if err != nil {
-		panic(err)
-	}
+	url := rss.Sources["an-giang"]
+	data, _ := rss.Fetch(url)
+	results, _ := rss.Parse(data)
 
-	for _, item := range items {
-		fmt.Println(item.Title)
-		fmt.Println(item.Description)
-		fmt.Println(item.Link)
-		fmt.Println("-----------")
+	for _, r := range results {
+		fmt.Println("=== ", r.Province, r.Date, " ===")
+		for giai, so := range r.Prizes {
+			fmt.Println("Giải", giai+":", so)
+		}
+		fmt.Println()
 	}
 
 	switch utils.GenFlags() {
