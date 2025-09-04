@@ -11,7 +11,7 @@ import (
 func main() {
 	fmt.Println(utils.Banner())
 
-	url := rss.Sources["an-giang"]
+	url := rss.Sources("an-giang")
 	data, _ := rss.Fetch(url)
 	results, _ := rss.Parse(data)
 
