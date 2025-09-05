@@ -1,6 +1,8 @@
 package rss
 
 import (
+	_ "fmt"
+
 	"strings"
 	"unicode"
 )
@@ -42,5 +44,16 @@ func Sources(tinh string) string {
 		}
 	}
 
-	return "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss"
+	switch tinh {
+		case "binh-dinh": code = "bdi"
+		case "da-nang": code = "dng"
+		case "dak-nong": code = "dno"
+		case "quang-ngai": code = "qng"
+		case "quang-nam": code = "qna"
+	}
+	source := "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss"
+
+	// fmt.Println(source)
+
+	return source
 }
