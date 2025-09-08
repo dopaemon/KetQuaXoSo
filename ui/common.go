@@ -54,7 +54,7 @@ func ShowResults(date string, ui *UIState) {
 				text += fmt.Sprintf("Danh sách giải: \n")
 				for _, giai := range configs.Order {
 					if so, ok := r.Prizes[giai]; ok {
-						text += fmt.Sprintf(" - Giải: %s: %s\n", giai, so)
+						text += fmt.Sprintf(" - Giải %s: %s\n", giai, so)
 					}
 				}
 				text += "\n\nChúc bạn may mắn !!!"
