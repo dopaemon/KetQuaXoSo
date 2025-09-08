@@ -51,11 +51,13 @@ func ShowResults(date string, ui *UIState) {
 		for _, r := range ui.ParsedResults {
 			if r.Date == date {
 				text := fmt.Sprintf("%s\n", r.Title)
+				text += fmt.Sprintf("Danh sách giải: \n")
 				for _, giai := range configs.Order {
 					if so, ok := r.Prizes[giai]; ok {
 						text += fmt.Sprintf("%s: %s\n", giai, so)
 					}
 				}
+				text += "\nChúc bạn may mắn !!!"
 				ui.ResultsLabel.SetText(text)
 				found = true
 				break
