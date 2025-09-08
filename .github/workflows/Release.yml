@@ -99,6 +99,7 @@ jobs:
                   --id=com.dopaemon.ketquaxoso \
                   --icon $(pwd)/assets/Icon.png \
                   --release
+          fi
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
