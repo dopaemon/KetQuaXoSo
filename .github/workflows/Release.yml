@@ -50,7 +50,6 @@ jobs:
           elif [ "$GOOS" = "android" ]; then
               fyne package \
                   --os android \
-                  --src=$(pwd)/cmd/gui \
                   --name="KetQuaXoSo" \
                   --id=com.dopaemon.ketquaxoso \
                   --icon $(pwd)/assets/Icon.png \
