@@ -6,6 +6,8 @@ on:
 jobs:
   set-tag:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       tag: ${{ steps.set-tag.outputs.tag }}
     steps:
