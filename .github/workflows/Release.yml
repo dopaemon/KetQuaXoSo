@@ -29,6 +29,9 @@ jobs:
         env:
           GOOS: ${{ matrix.os }}
         run: |
+          if [ ! -f ./main.go ]; then
+              ln -s ./cmd/gui/main.go ./main.go
+          fi
           echo "Building for $GOOS"
           if [ "$GOOS" = "windows" ]; then
               sudo apt-get update && sudo apt-get install -y mingw-w64
