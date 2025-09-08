@@ -7,12 +7,43 @@ on:
   workflow_dispatch:
 
 jobs:
+  set-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.set-tag.outputs.tag }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set tag as timestamp
+        id: set-tag
+        run: echo "tag=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+
+  create-release:
+    needs: set-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.set-tag.outputs.tag }}
+          name: KetQuaXoSo Build ${{ needs.set-tag.outputs.tag }}
+          draft: true
+          body: |
+            Build: KetQuaXoSo App
+            Platforms: Windows, Linux, Android
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
+    needs: set-tag
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [windows, linux, android]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -65,3 +96,37 @@ jobs:
           path: |
             KetQuaXoSo
             KetQuaXoSo.*
+
+  upload-to-release:
+    needs: [build, create-release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: KetQuaXoSo-windows
+          path: ./artifacts/windows
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: KetQuaXoSo-linux
+          path: ./artifacts/linux
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: KetQuaXoSo-android
+          path: ./artifacts/android
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.set-tag.outputs.tag }}
+          files: |
+            ./artifacts/windows/*
+            ./artifacts/linux/*
+            ./artifacts/android/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
