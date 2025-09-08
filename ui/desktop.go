@@ -23,11 +23,13 @@ func BuildDesktopUI(w fyne.Window) {
 
 	provinceSelect := widget.NewSelect(configs.Provinces, func(value string) {
 		ui.Status.SetText("Đang tải dữ liệu...")
+		ui.ResultsLabel.SetText("")
 		go FetchResults(value, ui)
 	})
 	provinceSelect.PlaceHolder = "Chọn loại vé số"
 
 	ui.DateSelect = widget.NewSelect([]string{}, func(value string) {
+		ui.ResultsLabel.SetText("")
 		ShowResults(value, ui)
 	})
 	ui.DateSelect.PlaceHolder = "Chọn ngày"
