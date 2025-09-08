@@ -11,30 +11,20 @@ jobs:
     outputs:
       tag: ${{ steps.set-tag.outputs.tag }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set tag as timestamp and push
+      - name: Set tag as timestamp
         id: set-tag
         run: |
           TAG="v$(date +'%Y%m%d%H%M%S')"
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git tag $TAG
-          git push origin $TAG
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   create-release:
     needs: set-tag
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      tag: ${{ needs.set-tag.outputs.tag }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -48,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
-    needs: set-tag
+    needs: [set-tag, create-release]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -113,21 +103,20 @@ jobs:
     needs: [build, create-release]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Download Artifacts
+      - name: Download Windows Artifacts
         uses: actions/download-artifact@v4
         with:
           name: KetQuaXoSo-windows
           path: ./artifacts/windows
 
-      - uses: actions/download-artifact@v4
+      - name: Download Linux Artifacts
+        uses: actions/download-artifact@v4
         with:
           name: KetQuaXoSo-linux
           path: ./artifacts/linux
 
-      - uses: actions/download-artifact@v4
+      - name: Download Android Artifacts
+        uses: actions/download-artifact@v4
         with:
           name: KetQuaXoSo-android
           path: ./artifacts/android
@@ -135,7 +124,7 @@ jobs:
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.set-tag.outputs.tag }}
+          tag_name: ${{ needs.create-release.outputs.tag }}
           files: |
             ./artifacts/windows/*
             ./artifacts/linux/*
