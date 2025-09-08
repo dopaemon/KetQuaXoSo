@@ -16,44 +16,42 @@ import (
 )
 
 var (
-	dateSelect    *widget.Select
-	resultsText   *widget.Entry
-	status        *widget.Label
-	parsedResults []rss.Result
-	selectedDate  string
+	dateSelectDesktop    *widget.Select
+	resultsLabelDesktop  *widget.Label
+	statusDesktop        *widget.Label
+	parsedResultsDesktop []rss.Result
+	selectedDateDesktop  string
 )
 
 func BuildDesktopUI(w fyne.Window) {
-	bannerText := "xskt"
-	banner := canvas.NewText(bannerText, color.White)
+	banner := canvas.NewText("xskt", color.White)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
 	banner.TextSize = 50
 
 	provinceSelect := widget.NewSelect(configs.Provinces, func(value string) {
-		status.SetText("Đang tải dữ liệu...")
-		go fetchResults(value)
+		statusDesktop.SetText("Đang tải dữ liệu...")
+		go fetchResultsDesktop(value)
 	})
 	provinceSelect.PlaceHolder = "Chọn loại vé số"
 
-	dateSelect = widget.NewSelect([]string{}, func(value string) {
-		showResults(value)
+	dateSelectDesktop = widget.NewSelect([]string{}, func(value string) {
+		showResultsDesktop(value)
 	})
-	dateSelect.PlaceHolder = "Chọn ngày"
+	dateSelectDesktop.PlaceHolder = "Chọn ngày"
 
-	resultsText = widget.NewMultiLineEntry()
-	resultsText.SetMinRowsVisible(18)
-	resultsText.Disable()
+	resultsLabelDesktop = widget.NewLabel("")
+	resultsLabelDesktop.Wrapping = fyne.TextWrapWord
 
 	input := widget.NewEntry()
 	input.SetPlaceHolder("Nhập số cần kiểm tra")
 
 	checkBtn := widget.NewButton("Kiểm tra", func() {
 		youNum := input.Text
-		if selectedDate == "" {
+		if selectedDateDesktop == "" {
 			dialog.ShowInformation("Thông báo", "Hãy chọn ngày trước", w)
 			return
 		}
-		giai, num := utils.CheckWinningNumber(parsedResults, selectedDate, youNum)
+		giai, num := utils.CheckWinningNumber(parsedResultsDesktop, selectedDateDesktop, youNum)
 		if giai != "" {
 			dialog.ShowInformation("Kết quả",
 				fmt.Sprintf("Số %s trúng giải %s: %s", youNum, giai, num), w)
@@ -62,18 +60,18 @@ func BuildDesktopUI(w fyne.Window) {
 		}
 	})
 
-	status = widget.NewLabel("")
+	statusDesktop = widget.NewLabel("")
 
 	left := container.NewVBox(
 		container.NewCenter(banner),
 		provinceSelect,
-		dateSelect,
+		dateSelectDesktop,
 		input,
 		checkBtn,
-		status,
+		statusDesktop,
 	)
 
-	right := container.NewMax(resultsText)
+	right := container.NewMax(resultsLabelDesktop)
 
 	content := container.NewHSplit(left, right)
 	content.SetOffset(0.35)
@@ -82,36 +80,35 @@ func BuildDesktopUI(w fyne.Window) {
 	w.Resize(fyne.NewSize(900, 600))
 }
 
-func fetchResults(prov string) {
+func fetchResultsDesktop(prov string) {
 	url := rss.Sources(prov)
 	data, err := rss.Fetch(url)
 	fyne.Do(func() {
 		if err != nil {
-			status.SetText("Lỗi fetch RSS: " + err.Error())
+			statusDesktop.SetText("Lỗi fetch RSS: " + err.Error())
 			return
 		}
-
 		res, err := rss.Parse(data)
 		if err != nil {
-			status.SetText("Lỗi parse RSS: " + err.Error())
+			statusDesktop.SetText("Lỗi parse RSS: " + err.Error())
 			return
 		}
 
-		parsedResults = res
-		dateSelect.Options = []string{}
+		parsedResultsDesktop = res
+		dateSelectDesktop.Options = []string{}
 		for _, r := range res {
-			dateSelect.Options = append(dateSelect.Options, r.Date)
+			dateSelectDesktop.Options = append(dateSelectDesktop.Options, r.Date)
 		}
-		dateSelect.Refresh()
-		status.SetText("Đã tải xong.")
+		dateSelectDesktop.Refresh()
+		statusDesktop.SetText("Đã tải xong.")
 	})
 }
 
-func showResults(date string) {
+func showResultsDesktop(date string) {
 	fyne.Do(func() {
-		selectedDate = date
+		selectedDateDesktop = date
 		found := false
-		for _, r := range parsedResults {
+		for _, r := range parsedResultsDesktop {
 			if r.Date == date {
 				text := fmt.Sprintf("=== %s ===\n", r.Title)
 				for _, giai := range configs.Order {
@@ -119,14 +116,13 @@ func showResults(date string) {
 						text += fmt.Sprintf("Giải %s: %s\n", giai, so)
 					}
 				}
-				resultsText.SetText(text)
-				resultsText.Refresh()
+				resultsLabelDesktop.SetText(text)
 				found = true
 				break
 			}
 		}
 		if !found {
-			resultsText.SetText("!!! Không có kết quả !!!")
+			resultsLabelDesktop.SetText("!!! Không có kết quả !!!")
 		}
 	})
 }
