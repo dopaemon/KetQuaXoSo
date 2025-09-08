@@ -53,15 +53,13 @@ jobs:
                   --name="KetQuaXoSo" \
                   --id=com.dopaemon.ketquaxoso \
                   --icon $(pwd)/assets/Icon.png \
-                  --release \
-                  --universal
+                  --release
           elif [ "$GOOS" = "ios" ]; then
               fyne package \
                   --os ios \
                   --name="KetQuaXoSo" \
                   --id=com.dopaemon.ketquaxoso \
-                  --release \
-                  --universal
+                  --release
           fi
 
       - name: Upload Artifact
