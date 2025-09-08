@@ -17,6 +17,8 @@ func BuildMobileUI(w fyne.Window) {
 		Status:       widget.NewLabel(""),
 	}
 
+	ui.ResultsLabel.Wrapping = fyne.TextWrapWord
+
 	banner := canvas.NewText("XSKT", color.White)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
 	banner.TextSize = 36
