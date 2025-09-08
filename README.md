@@ -1,6 +1,8 @@
+<center>
+
 # Kết Quả Xổ Số
 
-![KetQuaXoSo Icon](./assets/Icon.png)
+<img src="./assets/Icon.png" alt="KetQuaXoSo Icon" width="150"/>
 
 Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android, Linux, Windows
 
@@ -8,27 +10,35 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 [![release](https://img.shields.io/github/v/release/dopaemon/KetQuaXoSo)](https://github.com/dopaemon/KetQuaXoSo/releases/latest)
 [![downloads](https://img.shields.io/github/downloads/dopaemon/KetQuaXoSo/total)](https://github.com/dopaemon/KetQuaXoSo/releases/latest)
 
+---
+
 ## Features
 
 - Xem kết quả xổ số theo khu vực
 - Xem kết quả xổ số theo ngày
-- Chạy đa nền tảng
+- Chạy đa nền tảng (Android, Linux, Windows)
+
+---
 
 ## Download
-| Android    | Windows | Linux |
-| ---------- | ------- | ----- |
-| [Download](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.apk) | [Download](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.exe) | [Download](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.tar.gz) |
 
+| Android | Windows | Linux |
+| ------- | ------- | ----- |
+| [Download APK](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.apk) | [Download EXE](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.exe) | [Download TAR.GZ](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.tar.gz) |
+
+---
 
 ## Screenshots
-| Linux    | Windows | Android |
-| ---------- | ------- | ----- |
-| ![Screenshot 1](./assets/Screenshot2025-09-08164807.png) | ![Screenshot 2](./assets/Screenshot2025-09-08164907.png) | ![Screenshot 3](./assets/Screenshot_2025-09-08-16-41-27-083_com.dopaemon.ketquaxoso.jpg) |
-## License
-```LICENSE
-The MIT License (MIT)
 
-Copyright (c) 2025 dopaemon <polarisdp@gmail.com>
+| Linux | Windows | Android |
+| ----- | ------- | ------- |
+| <img src="./assets/Screenshot2025-09-08164807.png" alt="Linux Screenshot" width="250"/> | <img src="./assets/Screenshot2025-09-08164907.png" alt="Windows Screenshot" width="250"/> | <img src="./assets/Screenshot_2025-09-08-16-41-27-083_com.dopaemon.ketquaxoso.jpg" alt="Android Screenshot" width="150"/> |
+
+---
+
+## License
+```MIT
+The MIT License (MIT) © 2025 dopaemon <polarisdp@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,3 +58,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+</center>
