@@ -50,10 +50,10 @@ func ShowResults(date string, ui *UIState) {
 		found := false
 		for _, r := range ui.ParsedResults {
 			if r.Date == date {
-				text := fmt.Sprintf("=== %s ===\n", r.Title)
+				text := fmt.Sprintf("%s\n", r.Title)
 				for _, giai := range configs.Order {
 					if so, ok := r.Prizes[giai]; ok {
-						text += fmt.Sprintf("Giải %s: %s\n", giai, so)
+						text += fmt.Sprintf("%s: %s\n", giai, so)
 					}
 				}
 				ui.ResultsLabel.SetText(text)
