@@ -57,7 +57,7 @@ func ShowResults(date string, ui *UIState) {
 						text += fmt.Sprintf(" - Giải %s: %s\n", giai, so)
 					}
 				}
-				text += "\n\nChúc bạn may mắn !!!"
+				text += "\nChúc bạn may mắn !!!"
 				ui.ResultsLabel.SetText(text)
 				found = true
 				break
