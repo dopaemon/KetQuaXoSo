@@ -21,7 +21,7 @@ func BuildMobileUI(w fyne.Window) {
 
 	banner := canvas.NewText("XSKT", color.White)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
-	banner.TextSize = 36
+	banner.TextSize = 50
 
 	provinceSelect := widget.NewSelect(configs.Provinces, func(value string) {
 		ui.Status.SetText("Đang tải dữ liệu...")
