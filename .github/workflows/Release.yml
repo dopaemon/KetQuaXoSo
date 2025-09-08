@@ -1,17 +1,51 @@
 name: Build & Release Fyne App
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
   workflow_dispatch:
 
 jobs:
-  build:
+  set-tag:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      tag: ${{ steps.set-tag.outputs.tag }}
+    steps:
+      - name: Set tag as timestamp
+        id: set-tag
+        run: |
+          TAG="v$(date +'%Y%m%d%H%M%S')"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+  create-release:
+    needs: set-tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      tag: ${{ needs.set-tag.outputs.tag }}
+    steps:
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.set-tag.outputs.tag }}
+          name: KetQuaXoSo Build ${{ needs.set-tag.outputs.tag }}
+          draft: true
+          body: |
+            Build: KetQuaXoSo App
+            Platforms: Windows, Linux, Android
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: [set-tag, create-release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
-        platform: [windows/amd64, linux/amd64, android/amd64, android/arm64, ios/arm64]
+        os: [windows, linux, android]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,37 +55,82 @@ jobs:
         with:
           go-version: '1.25.1'
 
-      - uses: actions/checkout@v3
-      - uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r26d
-
       - name: Install Fyne CLI
         run: go install fyne.io/fyne/v2/cmd/fyne@latest
 
-      - name: Build for ${{ matrix.platform }}
+      - name: Build for ${{ matrix.os }}
         env:
-          GOOS: ${{ matrix.platform.split("/")[0] }}
-          GOARCH: ${{ matrix.platform.split("/")[1] }}
+          GOOS: ${{ matrix.os }}
         run: |
-          echo "Building for $GOOS/$GOARCH"
-          if [ "$GOOS" = "windows" ]; then
-              CC=x86_64-w64-mingw32-gcc fyne package --os $GOOS --exe=$(pwd)/KetQuaXoSo.exe --src=$(pwd)/cmd/gui --icon $(pwd)/assets/Icon.png --name="KetQuaXoSo" --app-id=com.dopaemon.ketquaxoso --release
-          elif [[ "$GOOS" == "linux" ]]; then
-              fyne package --os $GOOS --src=$(pwd)/cmd/gui --icon $(pwd)/assets/Icon.png --name="KetQuaXoSo" --app-id=com.dopaemon.ketquaxoso --release
-              go build -v ./cmd/gui/main.go && mv ./main ./KetQuaXoSo
-          elif [[ "$GOOS" == "android" ]]; then
-              fyne package --os $GOOS --name="KetQuaXoSo" --app-id=com.dopaemon.ketquaxoso --icon $(pwd)/assets/Icon.png --release
+          if [ ! -f ./main.go ]; then
+              ln -s ./cmd/gui/main.go ./main.go
           fi
-
-      - name: List of target
-        run: |
-          ls -lash
+          echo "Building for $GOOS"
+          if [ "$GOOS" = "windows" ]; then
+              sudo apt-get update && sudo apt-get install -y mingw-w64
+              CC=x86_64-w64-mingw32-gcc fyne package \
+                  --os windows \
+                  --icon $(pwd)/assets/Icon.png \
+                  --name="KetQuaXoSo" \
+                  --id=com.dopaemon.ketquaxoso \
+                  --release
+          elif [ "$GOOS" = "linux" ]; then
+              sudo apt-get update && sudo apt-get install -y build-essential pkg-config libgl1-mesa-dev xorg-dev libx11-dev
+              fyne package \
+                  --os linux \
+                  --icon $(pwd)/assets/Icon.png \
+                  --name="KetQuaXoSo" \
+                  --id=com.dopaemon.ketquaxoso \
+                  --release
+          elif [ "$GOOS" = "android" ]; then
+              fyne package \
+                  --os android \
+                  --name="KetQuaXoSo" \
+                  --id=com.dopaemon.ketquaxoso \
+                  --icon $(pwd)/assets/Icon.png \
+                  --release
+          fi
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KetQuaXoSo-${{ matrix.platform }}
+          name: KetQuaXoSo-${{ matrix.os }}
           path: |
             KetQuaXoSo
             KetQuaXoSo.*
+
+  upload-to-release:
+    needs: [build, create-release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download Windows Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: KetQuaXoSo-windows
+          path: ./artifacts/windows
+
+      - name: Download Linux Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: KetQuaXoSo-linux
+          path: ./artifacts/linux
+
+      - name: Download Android Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: KetQuaXoSo-android
+          path: ./artifacts/android
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.create-release.outputs.tag }}
+          files: |
+            ./artifacts/windows/*
+            ./artifacts/linux/*
+            ./artifacts/android/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
