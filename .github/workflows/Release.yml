@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         os: [windows, linux, android, ios]
-        arch: [amd64, amd64, amd64, arm64]
 
     steps:
       - name: Checkout repository
@@ -23,61 +22,52 @@ jobs:
         with:
           go-version: '1.25.1'
 
-      - name: Set up NDK for Android
-        if: matrix.os == 'android'
-        uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r26d
-
       - name: Install Fyne CLI
         run: go install fyne.io/fyne/v2/cmd/fyne@latest
 
-      - name: Build for ${{ matrix.os }}/ ${{ matrix.arch }}
+      - name: Build for ${{ matrix.os }}
         env:
           GOOS: ${{ matrix.os }}
-          GOARCH: ${{ matrix.arch }}
         run: |
-          echo "Building for $GOOS/$GOARCH"
+          echo "Building for $GOOS"
           if [ "$GOOS" = "windows" ]; then
               CC=x86_64-w64-mingw32-gcc fyne package \
-                  --os $GOOS \
+                  --os windows \
                   --exe=$(pwd)/KetQuaXoSo.exe \
                   --src=$(pwd)/cmd/gui \
                   --icon $(pwd)/assets/Icon.png \
                   --name="KetQuaXoSo" \
-                  --app-id=com.dopaemon.ketquaxoso \
+                  --id=com.dopaemon.ketquaxoso \
                   --release
           elif [ "$GOOS" = "linux" ]; then
               fyne package \
-                  --os $GOOS \
+                  --os linux \
                   --src=$(pwd)/cmd/gui \
                   --icon $(pwd)/assets/Icon.png \
                   --name="KetQuaXoSo" \
-                  --app-id=com.dopaemon.ketquaxoso \
+                  --id=com.dopaemon.ketquaxoso \
                   --release
-              go build -v ./cmd/gui/main.go && mv ./main ./KetQuaXoSo
           elif [ "$GOOS" = "android" ]; then
               fyne package \
-                  --os $GOOS \
+                  --os android \
                   --name="KetQuaXoSo" \
-                  --app-id=com.dopaemon.ketquaxoso \
+                  --id=com.dopaemon.ketquaxoso \
                   --icon $(pwd)/assets/Icon.png \
-                  --release
+                  --release \
+                  --universal
           elif [ "$GOOS" = "ios" ]; then
               fyne package \
-                  --os $GOOS \
+                  --os ios \
                   --name="KetQuaXoSo" \
-                  --app-id=com.dopaemon.ketquaxoso \
-                  --release
+                  --id=com.dopaemon.ketquaxoso \
+                  --release \
+                  --universal
           fi
-
-      - name: List build outputs
-        run: ls -lash
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KetQuaXoSo-${{ matrix.os }}-${{ matrix.arch }}
+          name: KetQuaXoSo-${{ matrix.os }}
           path: |
             KetQuaXoSo
             KetQuaXoSo.*
