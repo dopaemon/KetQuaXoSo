@@ -50,6 +50,8 @@ jobs:
   build:
     needs: set-tag
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
         os: [windows, linux, android]
