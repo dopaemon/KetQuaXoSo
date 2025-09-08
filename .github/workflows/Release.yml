@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [windows, linux, android, ios]
+        os: [windows, linux, android]
 
     steps:
       - name: Checkout repository
@@ -50,15 +50,10 @@ jobs:
           elif [ "$GOOS" = "android" ]; then
               fyne package \
                   --os android \
+                  --src=$(pwd)/cmd/gui \
                   --name="KetQuaXoSo" \
                   --id=com.dopaemon.ketquaxoso \
                   --icon $(pwd)/assets/Icon.png \
-                  --release
-          elif [ "$GOOS" = "ios" ]; then
-              fyne package \
-                  --os ios \
-                  --name="KetQuaXoSo" \
-                  --id=com.dopaemon.ketquaxoso \
                   --release
           fi
 
