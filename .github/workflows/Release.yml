@@ -1,9 +1,6 @@
 name: Build & Release Fyne App
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
   workflow_dispatch:
 
 jobs:
@@ -15,9 +12,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set tag as timestamp
+      - name: Set tag as timestamp and push
         id: set-tag
-        run: echo "tag=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+        run: |
+          TAG="v$(date +'%Y%m%d%H%M%S')"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git tag $TAG
+          git push origin $TAG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   create-release:
     needs: set-tag
@@ -46,6 +51,7 @@ jobs:
     strategy:
       matrix:
         os: [windows, linux, android]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -89,7 +95,6 @@ jobs:
                   --id=com.dopaemon.ketquaxoso \
                   --icon $(pwd)/assets/Icon.png \
                   --release
-          fi
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
