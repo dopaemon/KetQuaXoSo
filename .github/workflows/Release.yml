@@ -1,0 +1,57 @@
+name: Build & Release Fyne App
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [windows/amd64, linux/amd64, android/amd64, android/arm64, ios/arm64]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.25.1'
+
+      - uses: actions/checkout@v3
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r26d
+
+      - name: Install Fyne CLI
+        run: go install fyne.io/fyne/v2/cmd/fyne@latest
+
+      - name: Build for ${{ matrix.platform }}
+        env:
+          GOOS: ${{ matrix.platform.split("/")[0] }}
+          GOARCH: ${{ matrix.platform.split("/")[1] }}
+        run: |
+          echo "Building for $GOOS/$GOARCH"
+          if [ "$GOOS" = "windows" ]; then
+              CC=x86_64-w64-mingw32-gcc fyne package --os $GOOS --exe=$(pwd)/KetQuaXoSo.exe --src=$(pwd)/cmd/gui --icon $(pwd)/assets/Icon.png --name="KetQuaXoSo" --app-id=com.dopaemon.ketquaxoso --release
+          elif [[ "$GOOS" == "linux" ]]; then
+              fyne package --os $GOOS --src=$(pwd)/cmd/gui --icon $(pwd)/assets/Icon.png --name="KetQuaXoSo" --app-id=com.dopaemon.ketquaxoso --release
+              go build -v ./cmd/gui/main.go && mv ./main ./KetQuaXoSo
+          elif [[ "$GOOS" == "android" ]]; then
+              fyne package --os $GOOS --name="KetQuaXoSo" --app-id=com.dopaemon.ketquaxoso --icon $(pwd)/assets/Icon.png --release
+          fi
+
+      - name: List of target
+        run: |
+          ls -lash
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: KetQuaXoSo-${{ matrix.platform }}
+          path: |
+            KetQuaXoSo
+            KetQuaXoSo.*
