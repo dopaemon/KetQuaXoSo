@@ -1,15 +1,14 @@
-package main
+package ui
 
 import (
 	"fmt"
 	"image/color"
 
-	"XoSoToanQuoc/internal/configs"
-	"XoSoToanQuoc/internal/rss"
-	"XoSoToanQuoc/utils"
+	"KetQuaXoSo/internal/configs"
+	"KetQuaXoSo/internal/rss"
+	"KetQuaXoSo/utils"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
@@ -24,18 +23,14 @@ var (
 	selectedDate  string
 )
 
-func main() {
-	a := app.NewWithID("com.dopaemon.ketquaxoso")
-	w := a.NewWindow("Kết Quả Xổ Số")
-
+func BuildDesktopUI(w fyne.Window) {
 	bannerText := "xskt"
 	banner := canvas.NewText(bannerText, color.White)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
-	banner.TextSize = 36
+	banner.TextSize = 50
 
 	provinceSelect := widget.NewSelect(configs.Provinces, func(value string) {
 		status.SetText("Đang tải dữ liệu...")
-		status.Refresh()
 		go fetchResults(value)
 	})
 	provinceSelect.PlaceHolder = "Chọn loại vé số"
@@ -46,12 +41,11 @@ func main() {
 	dateSelect.PlaceHolder = "Chọn ngày"
 
 	resultsText = widget.NewMultiLineEntry()
-	resultsText.SetText("")
-	resultsText.SetMinRowsVisible(20)
+	resultsText.SetMinRowsVisible(18)
 	resultsText.Disable()
 
 	input := widget.NewEntry()
-	input.SetPlaceHolder("Nhập số của bạn để kiểm tra")
+	input.SetPlaceHolder("Nhập số cần kiểm tra")
 
 	checkBtn := widget.NewButton("Kiểm tra", func() {
 		youNum := input.Text
@@ -70,7 +64,7 @@ func main() {
 
 	status = widget.NewLabel("")
 
-	leftPanel := container.NewVBox(
+	left := container.NewVBox(
 		container.NewCenter(banner),
 		provinceSelect,
 		dateSelect,
@@ -79,31 +73,27 @@ func main() {
 		status,
 	)
 
-	rightPanel := container.NewMax(resultsText)
+	right := container.NewMax(resultsText)
 
-	content := container.NewHSplit(leftPanel, rightPanel)
-	content.Offset = 0.35
+	content := container.NewHSplit(left, right)
+	content.SetOffset(0.35)
 
 	w.SetContent(content)
-	w.Resize(fyne.NewSize(800, 600))
-	w.ShowAndRun()
+	w.Resize(fyne.NewSize(900, 600))
 }
 
 func fetchResults(prov string) {
 	url := rss.Sources(prov)
 	data, err := rss.Fetch(url)
-
 	fyne.Do(func() {
 		if err != nil {
 			status.SetText("Lỗi fetch RSS: " + err.Error())
-			status.Refresh()
 			return
 		}
 
 		res, err := rss.Parse(data)
 		if err != nil {
 			status.SetText("Lỗi parse RSS: " + err.Error())
-			status.Refresh()
 			return
 		}
 
@@ -113,9 +103,7 @@ func fetchResults(prov string) {
 			dateSelect.Options = append(dateSelect.Options, r.Date)
 		}
 		dateSelect.Refresh()
-
 		status.SetText("Đã tải xong.")
-		status.Refresh()
 	})
 }
 
@@ -138,8 +126,7 @@ func showResults(date string) {
 			}
 		}
 		if !found {
-			resultsText.SetText("!!! Không có kết quả cho ngày này !!!")
-			resultsText.Refresh()
+			resultsText.SetText("!!! Không có kết quả !!!")
 		}
 	})
 }

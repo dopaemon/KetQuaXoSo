@@ -6,7 +6,7 @@ import (
 	_ "fmt"
 	"os"
 
-	_ "XoSoToanQuoc/internal/configs"
+	_ "KetQuaXoSo/internal/configs"
 
 	"github.com/charmbracelet/fang"
 	"github.com/spf13/cobra"

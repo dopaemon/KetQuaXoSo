@@ -1,4 +1,4 @@
-module XoSoToanQuoc
+module KetQuaXoSo
 
 go 1.24.5
 
