@@ -12,13 +12,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func GenFlags() string {
-	var runCLI, runGUI bool
-	var result string
+var (
+	runCLI	bool
+	runGUI	bool
+	runAPI	bool
+	result	string
+)
 
+func GenFlags() string {
 	cmd := &cobra.Command{
 		Use:   "KetQuaXoSo",
-		Short: "Xem kết quả xổ số kiến thiết (CLI/GUI)",
+		Short: "Xem kết quả xổ số kiến thiết (CLI/GUI/API)",
 		Long:  `Chạy chế độ GUI (mặc định) hoặc CLI (--cli).`,
 		Example: `
   # GUI mặc định:
@@ -27,18 +31,23 @@ func GenFlags() string {
   # Chạy CLI:
   KetQuaXoSo --cli
 
-  # Chạy GUI rõ ràng:
+  # Chạy GUI:
   KetQuaXoSo --gui
+
+  # Chạy API:
+  KetQuaXoSo --api
 		`,
 		RunE: func(c *cobra.Command, args []string) error {
-			if runCLI && runGUI {
-				return errors.New("không thể dùng đồng thời --cli và --gui")
+			if runCLI && runGUI && runAPI {
+				return errors.New("không thể dùng đồng thời --cli và --gui và --api")
 			}
 			switch {
 			case runCLI:
 				result = "cli"
 			case runGUI:
 				result = "gui"
+			case runAPI:
+				result = "api"
 			default:
 				result = "gui"
 			}
@@ -48,6 +57,7 @@ func GenFlags() string {
 
 	cmd.Flags().BoolVar(&runCLI, "cli", false, "Chạy chế độ CLI")
 	cmd.Flags().BoolVar(&runGUI, "gui", false, "Chạy chế độ GUI")
+	cmd.Flags().BoolVar(&runAPI, "api", false, "Chạy chế độ API")
 
 	cmd.SilenceUsage = true
 	cmd.SilenceErrors = true

@@ -4,6 +4,7 @@ import (
 	"os"
 	"runtime"
 
+	"KetQuaXoSo/internal/api"
 	"KetQuaXoSo/utils"
 	"KetQuaXoSo/ui"
 
@@ -26,6 +27,9 @@ func realMain() int {
 			break
 		case "cli":
 			ui.Tui()
+			break
+		case "api":
+			api.RunAPI()
 			break
 		default:
 			return 1

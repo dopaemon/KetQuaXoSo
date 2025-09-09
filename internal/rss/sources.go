@@ -50,7 +50,9 @@ func Sources(tinh string) string {
 		case "dak-nong": code = "dno"
 		case "quang-ngai": code = "qng"
 		case "quang-nam": code = "qnm"
+		case "binh-thuan": code = "bth"
 	}
+
 	source := "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss"
 
 	// fmt.Println(source)
