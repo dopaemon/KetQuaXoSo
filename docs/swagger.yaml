@@ -1,0 +1,121 @@
+definitions:
+  api.CheckRequest:
+    properties:
+      province:
+        example: Hà Nội
+        type: string
+    type: object
+  api.CheckResponse:
+    properties:
+      error:
+        type: string
+      province:
+        type: string
+      results: {}
+    type: object
+  api.TicketRequest:
+    properties:
+      date:
+        example: "2025-09-09"
+        type: string
+      number:
+        example: "123456"
+        type: string
+      province:
+        example: Hà Nội
+        type: string
+    type: object
+  api.TicketResponse:
+    properties:
+      date:
+        type: string
+      error:
+        type: string
+      input:
+        type: string
+      match:
+        type: string
+      prize:
+        type: string
+      province:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/check:
+    post:
+      consumes:
+      - application/json
+      description: Lấy toàn bộ kết quả xổ số của một tỉnh
+      parameters:
+      - description: Thông tin tỉnh
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.CheckRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.CheckResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.CheckResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.CheckResponse'
+      summary: Lấy kết quả xổ số
+      tags:
+      - Lottery
+  /api/check-ticket:
+    post:
+      consumes:
+      - application/json
+      description: Kiểm tra xem vé số có trúng thưởng hay không
+      parameters:
+      - description: Thông tin vé số
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.TicketRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.TicketResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.TicketResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.TicketResponse'
+      summary: Kiểm tra vé số
+      tags:
+      - Lottery
+  /api/province:
+    get:
+      description: Trả về danh sách các tỉnh có hỗ trợ xổ số
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Lấy danh sách tỉnh
+      tags:
+      - Province
+swagger: "2.0"

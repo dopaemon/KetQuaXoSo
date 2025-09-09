@@ -1,3 +1,11 @@
+// @title KetQuaXoSo API
+// @version 1.0
+// @description API kiểm tra kết quả xổ số
+// @contact.name dopaemon
+// @contact.email polarisdp@gmail.com
+// @host localhost:8080
+// @BasePath /
+
 package main
 
 import (

@@ -58,6 +58,7 @@ github.com/BurntSushi/toml
 github.com/BurntSushi/toml/internal
 # github.com/KyleBanks/depth v1.2.1
 ## explicit
+github.com/KyleBanks/depth
 # github.com/PuerkitoBio/purell v1.2.1
 ## explicit; go 1.21
 # github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
@@ -241,34 +242,50 @@ github.com/go-gl/glfw/v3.3/glfw/glfw/include/GLFW
 github.com/go-gl/glfw/v3.3/glfw/glfw/src
 # github.com/go-openapi/jsonpointer v0.22.0
 ## explicit; go 1.20
+github.com/go-openapi/jsonpointer
 # github.com/go-openapi/jsonreference v0.21.1
 ## explicit; go 1.20
+github.com/go-openapi/jsonreference
+github.com/go-openapi/jsonreference/internal
 # github.com/go-openapi/spec v0.21.0
 ## explicit; go 1.20
+github.com/go-openapi/spec
 # github.com/go-openapi/swag v0.24.1
 ## explicit; go 1.20.0
+github.com/go-openapi/swag
 # github.com/go-openapi/swag/cmdutils v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/cmdutils
 # github.com/go-openapi/swag/conv v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/conv
 # github.com/go-openapi/swag/fileutils v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/fileutils
 # github.com/go-openapi/swag/jsonname v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/jsonname
 # github.com/go-openapi/swag/jsonutils v0.24.0
 ## explicit; go 1.20
+github.com/go-openapi/swag/jsonutils
 # github.com/go-openapi/swag/loading v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/loading
 # github.com/go-openapi/swag/mangling v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/mangling
 # github.com/go-openapi/swag/netutils v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/netutils
 # github.com/go-openapi/swag/stringutils v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/stringutils
 # github.com/go-openapi/swag/typeutils v0.24.0
 ## explicit; go 1.20.0
+github.com/go-openapi/swag/typeutils
 # github.com/go-openapi/swag/yamlutils v0.24.0
 ## explicit; go 1.20
+github.com/go-openapi/swag/yamlutils
 # github.com/go-playground/locales v0.14.1
 ## explicit; go 1.17
 github.com/go-playground/locales
@@ -329,6 +346,7 @@ github.com/inconshreveable/mousetrap
 github.com/jeandeaual/go-locale
 # github.com/josharian/intern v1.0.0
 ## explicit; go 1.5
+github.com/josharian/intern
 # github.com/json-iterator/go v1.1.12
 ## explicit; go 1.12
 github.com/json-iterator/go
@@ -349,6 +367,10 @@ github.com/leodido/go-urn/scim/schema
 github.com/lucasb-eyer/go-colorful
 # github.com/mailru/easyjson v0.9.0
 ## explicit; go 1.20
+github.com/mailru/easyjson
+github.com/mailru/easyjson/buffer
+github.com/mailru/easyjson/jlexer
+github.com/mailru/easyjson/jwriter
 # github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
 github.com/mattn/go-isatty
@@ -443,10 +465,13 @@ github.com/stretchr/testify/assert/yaml
 github.com/stretchr/testify/require
 # github.com/swaggo/files v1.0.1
 ## explicit; go 1.16
+github.com/swaggo/files
 # github.com/swaggo/gin-swagger v1.6.1
 ## explicit; go 1.23.0
+github.com/swaggo/gin-swagger
 # github.com/swaggo/swag v1.16.6
 ## explicit; go 1.18
+github.com/swaggo/swag
 # github.com/twitchyliquid64/golang-asm v0.15.1
 ## explicit; go 1.13
 github.com/twitchyliquid64/golang-asm/asm/arch
@@ -505,6 +530,9 @@ golang.org/x/image/tiff/lzw
 golang.org/x/image/vector
 # golang.org/x/mod v0.28.0
 ## explicit; go 1.24.0
+golang.org/x/mod/internal/lazyregexp
+golang.org/x/mod/module
+golang.org/x/mod/semver
 # golang.org/x/net v0.44.0
 ## explicit; go 1.24.0
 golang.org/x/net/html
@@ -516,6 +544,8 @@ golang.org/x/net/http2/h2c
 golang.org/x/net/http2/hpack
 golang.org/x/net/idna
 golang.org/x/net/internal/httpcommon
+golang.org/x/net/webdav
+golang.org/x/net/webdav/internal/xml
 # golang.org/x/sync v0.17.0
 ## explicit; go 1.24.0
 golang.org/x/sync/errgroup
@@ -551,6 +581,20 @@ golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
 # golang.org/x/tools v0.36.0
 ## explicit; go 1.23.0
+golang.org/x/tools/go/ast/astutil
+golang.org/x/tools/go/buildutil
+golang.org/x/tools/go/internal/cgo
+golang.org/x/tools/go/loader
+golang.org/x/tools/imports
+golang.org/x/tools/internal/event
+golang.org/x/tools/internal/event/core
+golang.org/x/tools/internal/event/keys
+golang.org/x/tools/internal/event/label
+golang.org/x/tools/internal/gocommand
+golang.org/x/tools/internal/gopathwalk
+golang.org/x/tools/internal/imports
+golang.org/x/tools/internal/modindex
+golang.org/x/tools/internal/stdlib
 # google.golang.org/protobuf v1.36.9
 ## explicit; go 1.23
 google.golang.org/protobuf/encoding/protowire
