@@ -137,7 +137,7 @@ const docTemplate = `{
             "properties": {
                 "province": {
                     "type": "string",
-                    "example": "Hà Nội"
+                    "example": "Lâm Đồng"
                 }
             }
         },
@@ -158,7 +158,7 @@ const docTemplate = `{
             "properties": {
                 "date": {
                     "type": "string",
-                    "example": "2025-09-09"
+                    "example": "07/09"
                 },
                 "number": {
                     "type": "string",
@@ -166,7 +166,7 @@ const docTemplate = `{
                 },
                 "province": {
                     "type": "string",
-                    "example": "Hà Nội"
+                    "example": "Lâm Đồng"
                 }
             }
         },

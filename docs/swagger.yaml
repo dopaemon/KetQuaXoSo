@@ -2,7 +2,7 @@ definitions:
   api.CheckRequest:
     properties:
       province:
-        example: Hà Nội
+        example: Lâm Đồng
         type: string
     type: object
   api.CheckResponse:
@@ -16,13 +16,13 @@ definitions:
   api.TicketRequest:
     properties:
       date:
-        example: "2025-09-09"
+        example: 07/09
         type: string
       number:
         example: "123456"
         type: string
       province:
-        example: Hà Nội
+        example: Lâm Đồng
         type: string
     type: object
   api.TicketResponse:

@@ -126,7 +126,7 @@
             "properties": {
                 "province": {
                     "type": "string",
-                    "example": "Hà Nội"
+                    "example": "Lâm Đồng"
                 }
             }
         },
@@ -147,7 +147,7 @@
             "properties": {
                 "date": {
                     "type": "string",
-                    "example": "2025-09-09"
+                    "example": "07/09"
                 },
                 "number": {
                     "type": "string",
@@ -155,7 +155,7 @@
                 },
                 "province": {
                     "type": "string",
-                    "example": "Hà Nội"
+                    "example": "Lâm Đồng"
                 }
             }
         },
