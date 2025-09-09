@@ -65,27 +65,12 @@ jobs:
           echo "Building for $GOOS"
           if [ "$GOOS" = "windows" ]; then
               sudo apt-get update && sudo apt-get install -y mingw-w64
-              CC=x86_64-w64-mingw32-gcc fyne package \
-                  --os windows \
-                  --icon $(pwd)/assets/Icon.png \
-                  --name="KetQuaXoSo" \
-                  --id=com.dopaemon.ketquaxoso \
-                  --release
+              make windows
           elif [ "$GOOS" = "linux" ]; then
               sudo apt-get update && sudo apt-get install -y build-essential pkg-config libgl1-mesa-dev xorg-dev libx11-dev
-              fyne package \
-                  --os linux \
-                  --icon $(pwd)/assets/Icon.png \
-                  --name="KetQuaXoSo" \
-                  --id=com.dopaemon.ketquaxoso \
-                  --release
+              make linux
           elif [ "$GOOS" = "android" ]; then
-              fyne package \
-                  --os android \
-                  --name="KetQuaXoSo" \
-                  --id=com.dopaemon.ketquaxoso \
-                  --icon $(pwd)/assets/Icon.png \
-                  --release
+              make android
           fi
 
       - name: Upload Artifact
@@ -93,41 +78,13 @@ jobs:
         with:
           name: KetQuaXoSo-${{ matrix.os }}
           path: |
-            KetQuaXoSo
-            KetQuaXoSo.*
-
-  upload-to-release:
-    needs: [build, create-release]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-      - name: Download Windows Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: KetQuaXoSo-windows
-          path: ./artifacts/windows
-
-      - name: Download Linux Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: KetQuaXoSo-linux
-          path: ./artifacts/linux
-
-      - name: Download Android Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: KetQuaXoSo-android
-          path: ./artifacts/android
+            out/*
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.create-release.outputs.tag }}
           files: |
-            ./artifacts/windows/*
-            ./artifacts/linux/*
-            ./artifacts/android/*
+            ./out/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
