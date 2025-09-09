@@ -18,7 +18,7 @@ import (
 )
 
 type CheckRequest struct {
-	Province string `json:"province" example:"Hà Nội"`
+	Province string `json:"province" example:"Lâm Đồng"`
 }
 
 type CheckResponse struct {
@@ -28,8 +28,8 @@ type CheckResponse struct {
 }
 
 type TicketRequest struct {
-	Province string `json:"province" example:"Hà Nội"`
-	Date     string `json:"date" example:"2025-09-09"`
+	Province string `json:"province" example:"Lâm Đồng"`
+	Date     string `json:"date" example:"07/09"`
 	Number   string `json:"number" example:"123456"`
 }
 
