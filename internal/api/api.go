@@ -6,6 +6,7 @@ import (
 	"KetQuaXoSo/internal/configs"
 	"KetQuaXoSo/internal/rss"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
