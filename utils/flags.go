@@ -17,7 +17,7 @@ func GenFlags() string {
 	var result string
 
 	cmd := &cobra.Command{
-		Use:   "XoSoKienThiet",
+		Use:   "KetQuaXoSo",
 		Short: "Xem kết quả xổ số kiến thiết (CLI/GUI)",
 		Long:  `Chạy chế độ GUI (mặc định) hoặc CLI (--cli).`,
 		Example: `
@@ -55,9 +55,6 @@ func GenFlags() string {
 	cmd.SetHelpCommand(&cobra.Command{Hidden: true})
 	cmd.Version = ""
 	cmd.SetVersionTemplate("")
-
-	cmd.PersistentFlags().BoolP("version", "v", false, "")
-	cmd.PersistentFlags().MarkHidden("version")
 
 	if err := fang.Execute(
 		context.Background(),

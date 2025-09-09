@@ -23,7 +23,7 @@ func main() {
 			w.ShowAndRun()
 			break
 		case "cli":
-			Tui()
+			ui.Tui()
 			break
 		default:
 			os.Exit(1)
