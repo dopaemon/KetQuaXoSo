@@ -51,6 +51,7 @@ func Sources(tinh string) string {
 		case "quang-ngai": code = "qng"
 		case "quang-nam": code = "qnm"
 		case "binh-thuan": code = "bth"
+		case "dak-lak": code = "dlk"
 	}
 
 	source := "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss"
