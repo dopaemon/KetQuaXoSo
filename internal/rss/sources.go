@@ -38,11 +38,6 @@ func Sources(tinh string) string {
 
 	words := strings.Split(tinh, "-")
 	code := ""
-	for _, w := range words {
-		if len(w) > 0 {
-			code += string(w[0])
-		}
-	}
 
 	switch tinh {
 		case "binh-dinh": code = "bdi"
@@ -52,11 +47,8 @@ func Sources(tinh string) string {
 		case "quang-nam": code = "qnm"
 		case "binh-thuan": code = "bth"
 		case "dak-lak": code = "dlk"
+		default: for _, w := range words { if len(w) > 0 { code += string(w[0]) } }
 	}
 
-	source := "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss"
-
-	// fmt.Println(source)
-
-	return source
+	return "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss" /** **/
 }
