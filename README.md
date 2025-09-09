@@ -26,6 +26,47 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 | ------- | ------- | ----- |
 | [Download APK](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-android-universal.apk) | [Download EXE](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-windows-amd64.exe) | [Download TAR.GZ](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.tar.gz) |
 |         |         | [Download Binary](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-linux-amd64) |
+
+---
+
+## How to build
+### Request
+- GoLang: 1.25
+- Fyne v2.6.3
+- Linux server
+- Cmake
+
+### Setup enviromnet
+- Get Source Code:
+```bash
+git clone -b main --single-branch https://github.com/dopaemon/KetQuaXoSo.git
+```
+- Install Packages:
+```bash
+sudo apt update
+sudo apt-get install -y mingw-w64 build-essential pkg-config libgl1-mesa-dev xorg-dev libx11-dev gcc-aarch64-linux-gnu
+```
+- Install NDK: [**Google Developer**](https://developer.android.com/ndk/downloads)
+
+### Start build
+- Linux:
+```bash
+make linux
+```
+- Android:
+```bash
+make android
+```
+- Windows:
+```bash
+make windows
+```
+- Build all:
+```bash
+make complete
+```
+- OUTPUT Dir: ./out
+
 ---
 
 ## Screenshots
