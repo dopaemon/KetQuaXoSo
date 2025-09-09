@@ -1,4 +1,4 @@
-package main
+package ui
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 	"github.com/charmbracelet/huh"
 )
 
-func main() {
+func Tui() {
 	fmt.Println(utils.Banner())
 
 	province := ""

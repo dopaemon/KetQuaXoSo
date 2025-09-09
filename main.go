@@ -11,7 +11,6 @@ import (
 func main() {
 	a := app.NewWithID("com.dopaemon.ketquaxoso")
 	w := a.NewWindow("Kết Quả Xổ Số")
-	a.Settings().SetTheme(theme.DarkTheme())
 
 	if runtime.GOOS == "android" || runtime.GOOS == "ios" {
 		ui.BuildMobileUI(w)
@@ -19,5 +18,14 @@ func main() {
 		ui.BuildDesktopUI(w)
 	}
 
-	w.ShowAndRun()
+	switch utils.GenFlags() {
+		case "gui":
+			w.ShowAndRun()
+			break
+		case "cli":
+			Tui()
+			break
+		default:
+			os.Exit(1)
+	}
 }
