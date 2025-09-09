@@ -13,7 +13,7 @@ API phục vụ việc lấy danh sách tỉnh, tra cứu kết quả xổ số 
 ---
 
 ## Sử dụng
-- Link API Gốc: `http://localhost:8080`
+- Link API Gốc: `http://localhost:8080/api`
 
 ---
 
@@ -41,6 +41,7 @@ bash:
 ```bash
 curl -X POST http://localhost:8080/api/check-ticket -H "Content-Type: application/json" -d '{"province":"Quảng Trị","date":"04/09","number":"477536"}'
 ```
+output:
 ```json
 {"province":"Quảng Trị","date":"04/09","input":"477536","prize":"ĐB","match":"477536"}
 ```
