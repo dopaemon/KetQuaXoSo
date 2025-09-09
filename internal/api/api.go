@@ -1,6 +1,7 @@
 package api
 
 import (
+	"time"
 	"net/http"
 
 	"KetQuaXoSo/internal/configs"
@@ -22,6 +23,13 @@ type CheckResponse struct {
 
 func RunAPI() {
 	r := gin.Default()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"GET", "POST", "OPTIONS"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Accept"},
+		MaxAge:       12 * time.Hour,
+	}))
 
 	r.GET("/api/province", func(c *gin.Context) {
 		c.JSON(http.StatusOK, configs.Provinces)
