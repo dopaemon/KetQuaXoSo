@@ -21,6 +21,8 @@ type UIState struct {
 }
 
 func FetchResults(prov string, ui *UIState) {
+	ui.Status.Wrapping = fyne.TextWrapWord
+
 	url := rss.Sources(prov)
 	data, err := rss.Fetch(url)
 	fyne.Do(func() {
