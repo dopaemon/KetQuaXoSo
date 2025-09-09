@@ -1,6 +1,6 @@
 # Kết Quả Xổ Số
 
-<img src="./assets/Icon.png" alt="KetQuaXoSo Icon" width="150"/>
+<img src="./assets/Icon.png" alt="KetQuaXoSo Icon" width="250"/>
 
 Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android, Linux, Windows
 
@@ -77,7 +77,6 @@ make complete
 
 ## Directory Tree
 ```text
-~/XoSoToanQuoc $ tree ./
 ./
 ├── LICENSE
 ├── Makefile
@@ -110,8 +109,6 @@ make complete
     ├── golang.org
     ├── gopkg.in
     └── modules.txt
-
-12 directories, 23 files
 ```
 
 ---
