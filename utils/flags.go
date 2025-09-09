@@ -22,13 +22,13 @@ func GenFlags() string {
 		Long:  `Chạy chế độ GUI (mặc định) hoặc CLI (--cli).`,
 		Example: `
   # GUI mặc định:
-  XoSoKienThiet
+  KetQuaXoSo
 
   # Chạy CLI:
-  XoSoKienThiet --cli
+  KetQuaXoSo --cli
 
   # Chạy GUI rõ ràng:
-  XoSoKienThiet --gui
+  KetQuaXoSo --gui
 		`,
 		RunE: func(c *cobra.Command, args []string) error {
 			if runCLI && runGUI {

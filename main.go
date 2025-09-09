@@ -11,25 +11,29 @@ import (
 	_ "fyne.io/fyne/v2/theme"
 )
 
-func main() {
-	a := app.NewWithID("com.dopaemon.ketquaxoso")
-	w := a.NewWindow("Kết Quả Xổ Số")
-
-	if runtime.GOOS == "android" || runtime.GOOS == "ios" {
-		ui.BuildMobileUI(w)
-	} else {
-		ui.BuildDesktopUI(w)
-	}
-
+func realMain() int {
 	switch utils.GenFlags() {
 		case "gui":
+			a := app.NewWithID("com.dopaemon.ketquaxoso")
+			w := a.NewWindow("Kết Quả Xổ Số")
+
+			if runtime.GOOS == "android" || runtime.GOOS == "ios" {
+				ui.BuildMobileUI(w)
+			} else {
+				ui.BuildDesktopUI(w)
+			}
 			w.ShowAndRun()
 			break
 		case "cli":
 			ui.Tui()
 			break
 		default:
-			os.Exit(1)
+			return 1
 	}
+
+	return 0
 }
 
+func main() {
+	os.Exit(realMain())
+}
