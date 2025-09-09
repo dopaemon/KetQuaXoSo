@@ -58,13 +58,13 @@ jobs:
       - name: Install Fyne CLI
         run: |
           go install fyne.io/fyne/v2/cmd/fyne@latest
-          go install github.com/swaggo/swag/cmd/swag@latest
+          # go install github.com/swaggo/swag/cmd/swag@latest
 
       - name: Build for ${{ matrix.os }}
         env:
           GOOS: ${{ matrix.os }}
         run: |
-          swag init -g internal/api/api.go --output docs
+          # swag init -g internal/api/api.go --output docs
           echo "Building for $GOOS"
           if [ "$GOOS" = "windows" ]; then
               sudo apt-get update && sudo apt-get install -y mingw-w64
