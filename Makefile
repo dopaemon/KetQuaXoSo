@@ -28,8 +28,6 @@ linux: clean linux-arm64 linux-amd64
 
 .PHONY: linux-arm64
 linux-arm64: clean out
-	CC=/usr/bin/aarch64-linux-gnu-gcc fyne package --os linux --icon $(APP_ROOT)/assets/Icon.png --name="KetQuaXoSo" --id=com.dopaemon.ketquaxoso --release && \
-	mv KetQuaXoSo.tar.xz $(APP_OUT)/KetQuaXoSo-linux--aarch64.tar.xz && \
 	CC=/usr/bin/aarch64-linux-gnu-gcc GOOS=linux GOARCH=arm64 go build -v && \
 	mv KetQuaXoSo $(APP_OUT)/KetQuaXoSo-linux-aarch64
 
