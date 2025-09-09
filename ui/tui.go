@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"XoSoToanQuoc/internal/configs"
-	"XoSoToanQuoc/internal/rss"
-	"XoSoToanQuoc/utils"
+	"KetQuaXoSo/internal/configs"
+	"KetQuaXoSo/internal/rss"
+	"KetQuaXoSo/utils"
 
 	"github.com/charmbracelet/huh"
 )
