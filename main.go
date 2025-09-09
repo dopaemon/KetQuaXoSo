@@ -1,11 +1,14 @@
 package main
 
 import (
+	"os"
 	"runtime"
 
+	"KetQuaXoSo/utils"
 	"KetQuaXoSo/ui"
+
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/theme"
+	_ "fyne.io/fyne/v2/theme"
 )
 
 func main() {
@@ -29,3 +32,4 @@ func main() {
 			os.Exit(1)
 	}
 }
+
