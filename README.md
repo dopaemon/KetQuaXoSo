@@ -1,5 +1,3 @@
-<center>
-
 # Kết Quả Xổ Số
 
 <img src="./assets/Icon.png" alt="KetQuaXoSo Icon" width="150"/>
@@ -77,6 +75,47 @@ make complete
 
 ---
 
+## Directory Tree
+```text
+~/XoSoToanQuoc $ tree ./
+./
+├── LICENSE
+├── Makefile
+├── README.md
+├── SECURITY.md
+├── assets
+│   └── Icon.png
+├── go.mod
+├── go.sum
+├── internal
+│   ├── configs
+│   │   └── configs.go
+│   └── rss
+│       ├── fetcher.go
+│       ├── parser.go
+│       └── sources.go
+├── main.go
+├── ui
+│   ├── common.go
+│   ├── desktop.go
+│   ├── mobile.go
+│   └── tui.go
+├── utils
+│   ├── CheckWinningNumber.go
+│   ├── banner.go
+│   └── flags.go
+└── vendor
+    ├── fyne.io
+    ├── github.com
+    ├── golang.org
+    ├── gopkg.in
+    └── modules.txt
+
+12 directories, 23 files
+```
+
+---
+
 ## License
 ```MIT
 The MIT License (MIT) © 2025 dopaemon <polarisdp@gmail.com>
@@ -99,4 +138,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-</center>
