@@ -1,11 +1,3 @@
-// @title KetQuaXoSo API
-// @version 1.0
-// @description API kiểm tra kết quả xổ số
-// @contact.name dopaemon
-// @contact.email polarisdp@gmail.com
-// @host localhost:8080
-// @BasePath /
-
 package main
 
 import (
@@ -32,13 +24,13 @@ func realMain() int {
 				ui.BuildDesktopUI(w)
 			}
 			w.ShowAndRun()
-			break
+			return 0
 		case "cli":
 			ui.Tui()
-			break
+			return 0
 		case "api":
 			api.RunAPI()
-			break
+			return 0
 		default:
 			return 1
 	}
