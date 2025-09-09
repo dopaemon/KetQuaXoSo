@@ -19,7 +19,8 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 ---
 
 ## API Docs
-* [**Docs API**](https://github.com/dopaemon/KetQuaXoSo/blob/main/docs/API.md)
+- Run command: `./KetQuaXoSo --api`
+- Open Website: `http://localhost:8080/swagger/index.html`
 
 ---
 ## Download
