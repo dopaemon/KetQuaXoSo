@@ -89,9 +89,15 @@ make complete
 ├── SECURITY.md
 ├── assets
 │   └── Icon.png
+├── docs
+│   ├── docs.go
+│   ├── swagger.json
+│   └── swagger.yaml
 ├── go.mod
 ├── go.sum
 ├── internal
+│   ├── api
+│   │   └── api.go
 │   ├── configs
 │   │   └── configs.go
 │   └── rss
@@ -112,6 +118,7 @@ make complete
     ├── fyne.io
     ├── github.com
     ├── golang.org
+    ├── google.golang.org
     ├── gopkg.in
     └── modules.txt
 ```
