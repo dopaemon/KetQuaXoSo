@@ -24,8 +24,8 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 
 | Android | Windows | Linux |
 | ------- | ------- | ----- |
-| [Download APK](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.apk) | [Download EXE](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.exe) | [Download TAR.GZ](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.tar.gz) |
-
+| [Download APK](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-android-universal.apk) | [Download EXE](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-windows-amd64.exe) | [Download TAR.GZ](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.tar.gz) |
+|         |         | [Download Binary](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-linux-amd64) |
 ---
 
 ## Screenshots
