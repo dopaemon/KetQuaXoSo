@@ -55,7 +55,7 @@ func BuildMobileUI(w fyne.Window) {
 
 	content := container.NewVBox(
 		container.NewCenter(banner),
-		container NewCenter(des),
+		container.NewCenter(des),
 		row,
 		ui.ResultsLabel,
 		input,
