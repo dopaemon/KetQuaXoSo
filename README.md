@@ -32,7 +32,7 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 
 ---
 
-## Docker
+## Docker (API Only)
 ### Docker build
 ```bash
 docker build -t kqxs-api .
