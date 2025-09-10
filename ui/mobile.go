@@ -19,9 +19,13 @@ func BuildMobileUI(w fyne.Window) {
 
 	ui.ResultsLabel.Wrapping = fyne.TextWrapWord
 
-	banner := canvas.NewText("XSKT", color.White)
+	banner := canvas.NewText("KQXS", color.White)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
 	banner.TextSize = 50
+
+	des := canvas.NewText("Chương trình xem kết quả xổ số", color.White)
+	des.TextStyle = fyne.TextStyle{Bold: true}
+	des.TextSize = 20
 
 	provinceSelect := widget.NewSelect(configs.Provinces, func(value string) {
 		ui.Status.SetText("Đang tải dữ liệu...")
@@ -42,10 +46,17 @@ func BuildMobileUI(w fyne.Window) {
 		CheckNumber(input.Text, ui, w)
 	})
 
-	content := container.NewVBox(
-		container.NewCenter(banner),
+	row := container.NewHSplit(
 		provinceSelect,
 		ui.DateSelect,
+	)
+
+	row.SetOffset(0.7)
+
+	content := container.NewVBox(
+		container.NewCenter(banner),
+		container NewCenter(des),
+		row,
 		ui.ResultsLabel,
 		input,
 		checkBtn,

@@ -17,9 +17,13 @@ func BuildDesktopUI(w fyne.Window) {
 		Status:       widget.NewLabel(""),
 	}
 
-	banner := canvas.NewText("XSKT", color.White)
+	banner := canvas.NewText("KQXS", color.White)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
 	banner.TextSize = 50
+
+	des := canvas.NewText("Chương trình xem kết quả xổ số", color.White)
+	des.TextStyle = fyne.TextStyle{Bold: true}
+	des.TextSize = 20
 
 	provinceSelect := widget.NewSelect(configs.Provinces, func(value string) {
 		ui.Status.SetText("Đang tải dữ liệu...")
@@ -42,6 +46,7 @@ func BuildDesktopUI(w fyne.Window) {
 
 	left := container.NewVBox(
 		container.NewCenter(banner),
+		container.NewCenter(des),
 		provinceSelect,
 		ui.DateSelect,
 		input,
