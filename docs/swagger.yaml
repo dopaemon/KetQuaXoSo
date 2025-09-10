@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   api.CheckRequest:
     properties:
@@ -42,6 +43,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: API tra cứu kết quả xổ số kiến thiết Việt Nam.
+  title: KetQuaXoSo API
+  version: "1.0"
 paths:
   /api/check:
     post:
@@ -66,10 +70,18 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/api.CheckResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/api.CheckResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Lấy kết quả xổ số
       tags:
       - Lottery
@@ -96,10 +108,18 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/api.TicketResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/api.TicketResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Kiểm tra vé số
       tags:
       - Lottery
@@ -115,7 +135,21 @@ paths:
             items:
               type: string
             type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
       summary: Lấy danh sách tỉnh
       tags:
       - Province
+securityDefinitions:
+  ApiKeyAuth:
+    description: 'Nhập API key để sử dụng API. Giá trị mặc định cho test: **YouAPIKey**'
+    in: header
+    name: X-API-Key
+    type: apiKey
 swagger: "2.0"

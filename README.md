@@ -15,7 +15,7 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 - Xem kết quả xổ số theo khu vực
 - Xem kết quả xổ số theo ngày
 - Chạy đa nền tảng (Android, Linux, Windows)
-- Hỗ trợ API (Không API Key)
+- Hỗ trợ API (Hỗ trợ API Key)
 ---
 
 ## API Docs

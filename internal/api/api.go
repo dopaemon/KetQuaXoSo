@@ -17,6 +17,16 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title KetQuaXoSo API
+// @version 1.0
+// @description API tra cứu kết quả xổ số kiến thiết Việt Nam.
+// @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name X-API-Key
+// @description Nhập API key để sử dụng API. Giá trị mặc định cho test: **YouAPIKey**
+
 type CheckRequest struct {
 	Province string `json:"province" example:"Lâm Đồng"`
 }
@@ -42,26 +52,45 @@ type TicketResponse struct {
 	Error    string `json:"error,omitempty"`
 }
 
-// @Summary Lấy danh sách tỉnh
-// @Description Trả về danh sách các tỉnh có hỗ trợ xổ số
-// @Tags Province
-// @Produce json
-// @Success 200 {array} string
-// @Router /api/province [get]
+func APIKeyAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		apiKey := c.GetHeader("X-API-Key")
+		expectedKey := configs.AppConfig.ApiKey
+
+		if expectedKey != "" && apiKey != expectedKey {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or missing API key"})
+			c.Abort()
+			return
+		}
+
+		c.Next()
+	}
+}
+
+// @Summary	Lấy danh sách tỉnh
+// @Description	Trả về danh sách các tỉnh có hỗ trợ xổ số
+// @Tags	Province
+// @Security	ApiKeyAuth
+// @Produce	json
+// @Success	200 {array} string
+// @Failure	401 {object} map[string]string
+// @Router	/api/province [get]
 func GetProvinces(c *gin.Context) {
 	c.JSON(http.StatusOK, configs.Provinces)
 }
 
-// @Summary Lấy kết quả xổ số
-// @Description Lấy toàn bộ kết quả xổ số của một tỉnh
-// @Tags Lottery
-// @Accept json
-// @Produce json
-// @Param request body CheckRequest true "Thông tin tỉnh"
-// @Success 200 {object} CheckResponse
-// @Failure 400 {object} CheckResponse
-// @Failure 500 {object} CheckResponse
-// @Router /api/check [post]
+// @Summary	Lấy kết quả xổ số
+// @Description	Lấy toàn bộ kết quả xổ số của một tỉnh
+// @Tags	Lottery
+// @Security	ApiKeyAuth
+// @Accept	json
+// @Produce	json
+// @Param	request body CheckRequest true "Thông tin tỉnh"
+// @Success	200 {object} CheckResponse
+// @Failure	400 {object} CheckResponse
+// @Failure	401 {object} map[string]string
+// @Failure	500 {object} CheckResponse
+// @Router	/api/check [post]
 func CheckLottery(c *gin.Context) {
 	var req CheckRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -97,16 +126,18 @@ func CheckLottery(c *gin.Context) {
 	})
 }
 
-// @Summary Kiểm tra vé số
-// @Description Kiểm tra xem vé số có trúng thưởng hay không
-// @Tags Lottery
-// @Accept json
-// @Produce json
-// @Param request body TicketRequest true "Thông tin vé số"
-// @Success 200 {object} TicketResponse
-// @Failure 400 {object} TicketResponse
-// @Failure 500 {object} TicketResponse
-// @Router /api/check-ticket [post]
+// @Summary	Kiểm tra vé số
+// @Description	Kiểm tra xem vé số có trúng thưởng hay không
+// @Tags	Lottery
+// @Security	ApiKeyAuth
+// @Accept	json
+// @Produce	json
+// @Param	request body TicketRequest true "Thông tin vé số"
+// @Success	200 {object} TicketResponse
+// @Failure	400 {object} TicketResponse
+// @Failure	401 {object} map[string]string
+// @Failure	500 {object} TicketResponse
+// @Router	/api/check-ticket [post]
 func CheckTicket(c *gin.Context) {
 	var req TicketRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -163,15 +194,19 @@ func RunAPI() {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{configs.Origins},
 		AllowMethods: []string{"GET", "POST", "OPTIONS"},
-		AllowHeaders: []string{"Origin", "Content-Type", "Accept"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Accept", "X-API-Key"},
 		MaxAge:       12 * time.Hour,
 	}))
 
-	r.GET("/api/province", GetProvinces)
-	r.POST("/api/check", CheckLottery)
-	r.POST("/api/check-ticket", CheckTicket)
+	api := r.Group("/api")
+	api.Use(APIKeyAuth())
+	{
+		api.GET("/province", GetProvinces)
+		api.POST("/check", CheckLottery)
+		api.POST("/check-ticket", CheckTicket)
+	}
 
-	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler)) /** **/
+	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.PersistAuthorization(true))) /* */
 
 	r.Run(":" + configs.Port)
 }

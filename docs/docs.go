@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/api/check": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Lấy toàn bộ kết quả xổ số của một tỉnh",
                 "consumes": [
                     "application/json"
@@ -52,6 +57,15 @@ const docTemplate = `{
                             "$ref": "#/definitions/api.CheckResponse"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -63,6 +77,11 @@ const docTemplate = `{
         },
         "/api/check-ticket": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Kiểm tra xem vé số có trúng thưởng hay không",
                 "consumes": [
                     "application/json"
@@ -98,6 +117,15 @@ const docTemplate = `{
                             "$ref": "#/definitions/api.TicketResponse"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -109,6 +137,11 @@ const docTemplate = `{
         },
         "/api/province": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Trả về danh sách các tỉnh có hỗ trợ xổ số",
                 "produces": [
                     "application/json"
@@ -123,6 +156,15 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
                                 "type": "string"
                             }
                         }
@@ -193,17 +235,25 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "Nhập API key để sử dụng API. Giá trị mặc định cho test: **YouAPIKey**",
+            "type": "apiKey",
+            "name": "X-API-Key",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
+	Version:          "1.0",
 	Host:             "",
-	BasePath:         "",
+	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "KetQuaXoSo API",
+	Description:      "API tra cứu kết quả xổ số kiến thiết Việt Nam.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
