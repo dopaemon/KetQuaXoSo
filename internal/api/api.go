@@ -171,7 +171,7 @@ func RunAPI() {
 	r.POST("/api/check", CheckLottery)
 	r.POST("/api/check-ticket", CheckTicket)
 
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler)) /** **/
+	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler)) /** **/
 
 	r.Run(":" + configs.Port)
 }
