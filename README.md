@@ -32,6 +32,21 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 
 ---
 
+## Docker
+### Docker build
+```bash
+docker build -t kqxs-api .
+```
+### Docker run
+```bash
+docker run -d --name kqxs-api -p 8080:8080 -v $(pwd)/example.env:/app/.env:ro kqxs-api
+```
+### Docker Composer
+```bash
+docker compose up -d --build
+```
+---
+
 ## How to build
 ### Request
 - GoLang: 1.25
