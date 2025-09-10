@@ -8,7 +8,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/layout"
+	_ "fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -47,11 +47,12 @@ func BuildMobileUI(w fyne.Window) {
 		CheckNumber(input.Text, ui, w)
 	})
 
-	row := container.New(
-		layout.NewGridLayoutWithColumns(10),
-		container.New(layout.NewGridLayoutWithColumns(7), provinceSelect),
-		container.New(layout.NewGridLayoutWithColumns(3), ui.DateSelect),
+	row := container.NewHSplit(
+		provinceSelect,
+		ui.DateSelect,
 	)
+
+	row.SetOffset(0.7)
 
 	content := container.NewVBox(
 		container.NewCenter(banner),
