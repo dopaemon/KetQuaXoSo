@@ -4,6 +4,7 @@ import (
 	"os"
 	"runtime"
 
+	"KetQuaXoSo/internal/configs"
 	"KetQuaXoSo/internal/api"
 	"KetQuaXoSo/utils"
 	"KetQuaXoSo/ui"
@@ -29,6 +30,7 @@ func realMain() int {
 			ui.Tui()
 			return 0
 		case "api":
+			configs.LoadConfig()
 			api.RunAPI()
 			return 0
 		default:

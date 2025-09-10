@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -27,10 +27,12 @@ var (
 func LoadConfig(envPath ...string) {
 	if len(envPath) > 0 {
 		if err := godotenv.Load(envPath[0]); err != nil {
-			log.Printf("404: .env file not found in %s (Do not worrie, default values loaded).", envPath[0])
+			fmt.Printf("404: .env file not found in %s (Do not worrie, default values loaded)\n", envPath[0])
 		}
 	} else {
-		_ = godotenv.Load()
+		if err := godotenv.Load(); err != nil {
+			fmt.Println("404: .env file not found (Do not worrie, default values loaded)")
+		}
 	}
 
 	AppConfig = Config{
