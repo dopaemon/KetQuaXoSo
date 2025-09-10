@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN go mod tidy
-RUN go build -v
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags headless -v .
 
 # ===== Stage 2: Runtime =====
 FROM debian:bookworm-slim
@@ -19,10 +19,6 @@ FROM debian:bookworm-slim
 WORKDIR /app
 
 COPY --from=builder /app/KetQuaXoSo /app/KetQuaXoSo
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx libx11-6 libxrandr2 libxcursor1 libxinerama1 libxi6 \
-    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8080
 
