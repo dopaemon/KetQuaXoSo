@@ -30,13 +30,13 @@ func BuildMobileUI(w fyne.Window) {
 
 	provinceSelect := widget.NewSelect(configs.Provinces, func(value string) {
 		ui.Status.SetText("Đang tải dữ liệu...")
-		ui.ResultsLabel.SetText("")
+		ui.ResultsLabel.Hide()
 		go FetchResults(value, ui)
 	})
 	provinceSelect.PlaceHolder = "Chọn loại vé số"
 
 	ui.DateSelect = widget.NewSelect([]string{}, func(value string) {
-		ui.ResultsLabel.SetText("")
+		ui.ResultsLabel.Show()
 		ShowResults(value, ui)
 	})
 	ui.DateSelect.PlaceHolder = "Chọn ngày"
