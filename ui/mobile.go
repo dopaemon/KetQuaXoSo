@@ -45,7 +45,7 @@ func BuildMobileUI(w fyne.Window) {
 	input.SetPlaceHolder("Nhập số cần kiểm tra")
 	checkBtn := widget.NewButton("Kiểm tra", func() {
 		if !IsSixDigitNumber(input.Text) {
-			ui.Status.SetText("Vé số có ít nhất 6 ký tự số !!!")
+			ui.Status.SetText("Vé số phải có 6 ký tự số !!!")
 			return
 		}
 
