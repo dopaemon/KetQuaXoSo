@@ -7,7 +7,7 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 [![license](https://img.shields.io/github/license/dopaemon/KetQuaXoSo)](./LICENSE)
 [![release](https://img.shields.io/github/v/release/dopaemon/KetQuaXoSo)](https://github.com/dopaemon/KetQuaXoSo/releases/latest)
 [![downloads](https://img.shields.io/github/downloads/dopaemon/KetQuaXoSo/total)](https://github.com/dopaemon/KetQuaXoSo/releases/latest)
-
+[![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=dopaemon.ketquaxoso)](https://github.com/dopaemon/KetQuaXoSo.git)
 ---
 
 ## Features
