@@ -33,15 +33,17 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 ---
 
 ## Docker (API Only)
-### Docker build
+### Docker
+- Build Docker image:
 ```bash
 docker build -t kqxs-api .
 ```
-### Docker run
+- Run Docker container
 ```bash
 docker run -d --name kqxs-api -p 8080:8080 -v $(pwd)/example.env:/app/.env:ro kqxs-api
 ```
 ### Docker Composer
+- Build and run Docker Composer:
 ```bash
 docker compose up -d --build
 ```
@@ -98,16 +100,19 @@ make complete
 ## Directory Tree
 ```text
 ./
+├── Dockerfile
 ├── LICENSE
 ├── Makefile
 ├── README.md
 ├── SECURITY.md
 ├── assets
 │   └── Icon.png
+├── docker-compose.yml
 ├── docs
 │   ├── docs.go
 │   ├── swagger.json
 │   └── swagger.yaml
+├── example.env
 ├── go.mod
 ├── go.sum
 ├── internal
@@ -120,6 +125,7 @@ make complete
 │       ├── parser.go
 │       └── sources.go
 ├── main.go
+├── main_api.go
 ├── ui
 │   ├── common.go
 │   ├── desktop.go
