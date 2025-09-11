@@ -41,6 +41,12 @@ func BuildDesktopUI(w fyne.Window) {
 	input := widget.NewEntry()
 	input.SetPlaceHolder("Nhập số cần kiểm tra")
 	checkBtn := widget.NewButton("Kiểm tra", func() {
+		if !IsSixDigitNumber(input.Text) {
+			ui.Status.SetText("Vé số có ít nhất 6 ký tự số !!!")
+			return
+		}
+
+		ui.Status.SetText("")
 		CheckNumber(input.Text, ui, w)
 	})
 

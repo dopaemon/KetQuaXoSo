@@ -84,3 +84,15 @@ func CheckNumber(input string, ui *UIState, w fyne.Window) {
 		dialog.ShowInformation("Kết quả", "Không trúng!", w)
 	}
 }
+
+func IsSixDigitNumber(s string) bool {
+	if len(s) != 6 {
+		return false
+	}
+	for _, r := range s {
+		if r < '0' || r > '9' {
+			return false
+		}
+	}
+	return true
+}

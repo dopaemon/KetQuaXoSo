@@ -44,17 +44,30 @@ func BuildMobileUI(w fyne.Window) {
 	input := widget.NewEntry()
 	input.SetPlaceHolder("Nhập số cần kiểm tra")
 	checkBtn := widget.NewButton("Kiểm tra", func() {
+		if !IsSixDigitNumber(input.Text) {
+			ui.Status.SetText("Vé số có ít nhất 6 ký tự số !!!")
+			return
+		}
+
+		ui.Status.SetText("")
 		CheckNumber(input.Text, ui, w)
 	})
+
+	hSep := canvas.NewRectangle(color.NRGBA{R: 200, G: 200, B: 200, A: 255})
+	hSep.SetMinSize(fyne.NewSize(0, 1))
+
+	row := container.NewBorder(nil, nil, nil, checkBtn, input)
 
 	content := container.NewVBox(
 		container.NewCenter(banner),
 		container.NewCenter(des),
+		hSep,
 		provinceSelect,
 		ui.DateSelect,
+		row,
+		hSep,
 		ui.ResultsLabel,
-		input,
-		checkBtn,
+		hSep,
 		ui.Status,
 	)
 
