@@ -47,17 +47,11 @@ func BuildMobileUI(w fyne.Window) {
 		CheckNumber(input.Text, ui, w)
 	})
 
-	row := container.NewHSplit(
-		provinceSelect,
-		ui.DateSelect,
-	)
-
-	row.SetOffset(0.7)
-
 	content := container.NewVBox(
 		container.NewCenter(banner),
 		container.NewCenter(des),
-		row,
+		provinceSelect,
+		ui.DateSelect,
 		ui.ResultsLabel,
 		input,
 		checkBtn,
