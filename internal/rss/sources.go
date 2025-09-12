@@ -7,7 +7,7 @@ import (
 	"unicode"
 )
 
-func Sources(tinh string) string {
+func Sources(tinh string) (string, string) {
 	removeTone := func(s string) string {
 		var b strings.Builder
 		for _, r := range s {
@@ -50,5 +50,5 @@ func Sources(tinh string) string {
 		default: for _, w := range words { if len(w) > 0 { code += string(w[0]) } }
 	}
 
-	return "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss" /** **/
+	return "https://xskt.com.vn/rss-feed/" + tinh + "-xs" + code + ".rss", code
 }

@@ -15,6 +15,7 @@ func BuildDesktopUI(w fyne.Window) {
 	ui := &UIState{
 		ResultsLabel: widget.NewLabel(""),
 		Status:       widget.NewLabel(""),
+		LinkRSS:      widget.NewHyperlink("", nil),
 	}
 
 	banner := canvas.NewText("KQXS", color.White)
@@ -50,6 +51,11 @@ func BuildDesktopUI(w fyne.Window) {
 		CheckNumber(input.Text, ui, w)
 	})
 
+	row1 := container.NewGridWithColumns(2,
+		container.NewMax(ui.Status),
+		container.NewMax(ui.LinkRSS),
+	)
+
 	left := container.NewVBox(
 		container.NewCenter(banner),
 		container.NewCenter(des),
@@ -57,7 +63,7 @@ func BuildDesktopUI(w fyne.Window) {
 		ui.DateSelect,
 		input,
 		checkBtn,
-		ui.Status,
+		row1,
 	)
 
 	right := container.NewMax(ui.ResultsLabel)

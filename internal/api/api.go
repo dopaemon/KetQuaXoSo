@@ -102,7 +102,7 @@ func CheckLottery(c *gin.Context) {
 		return
 	}
 
-	url := rss.Sources(req.Province)
+	url, _ := rss.Sources(req.Province)
 	if url == "" {
 		c.JSON(http.StatusBadRequest, CheckResponse{Error: "Unknown province: " + req.Province})
 		return
@@ -149,7 +149,7 @@ func CheckTicket(c *gin.Context) {
 		return
 	}
 
-	url := rss.Sources(req.Province)
+	url, _ := rss.Sources(req.Province)
 	if url == "" {
 		c.JSON(http.StatusBadRequest, TicketResponse{Error: "Unknown province: " + req.Province})
 		return

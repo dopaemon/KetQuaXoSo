@@ -29,7 +29,7 @@ func Tui() {
 
 	huh.NewForm(huh.NewGroup(provinceSelect)).Run()
 
-	url := rss.Sources(province)
+	url, _ := rss.Sources(province)
 	data, err := rss.Fetch(url)
 	if err != nil {
 		fmt.Println("Lỗi fetch RSS:", err)

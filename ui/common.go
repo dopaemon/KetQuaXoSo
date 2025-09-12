@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fmt"
+	"net/url"
 
 	"KetQuaXoSo/internal/configs"
 	"KetQuaXoSo/internal/rss"
@@ -16,6 +17,7 @@ type UIState struct {
 	DateSelect    *widget.Select
 	ResultsLabel  *widget.Label
 	Status        *widget.Label
+	LinkRSS       *widget.Hyperlink
 	ParsedResults []rss.Result
 	SelectedDate  string
 }
@@ -23,8 +25,8 @@ type UIState struct {
 func FetchResults(prov string, ui *UIState) {
 	ui.Status.Wrapping = fyne.TextWrapWord
 
-	url := rss.Sources(prov)
-	data, err := rss.Fetch(url)
+	urlrss, code := rss.Sources(prov)
+	data, err := rss.Fetch(urlrss)
 	fyne.Do(func() {
 		if err != nil {
 			ui.Status.SetText("Lỗi fetch RSS: " + err.Error())
@@ -43,6 +45,10 @@ func FetchResults(prov string, ui *UIState) {
 		}
 		ui.DateSelect.Refresh()
 		ui.Status.SetText("Đã tải xong.")
+		u, _ := url.Parse("https://xskt.com.vn/xs" + code)
+		ui.LinkRSS.SetText("Xem Thêm ...")
+		ui.LinkRSS.SetURL(u)
+		ui.LinkRSS.Refresh()
 	})
 }
 

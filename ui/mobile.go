@@ -16,6 +16,7 @@ func BuildMobileUI(w fyne.Window) {
 	ui := &UIState{
 		ResultsLabel: widget.NewLabel(""),
 		Status:       widget.NewLabel(""),
+		LinkRSS:      widget.NewHyperlink("", nil),
 	}
 
 	ui.ResultsLabel.Wrapping = fyne.TextWrapWord
@@ -58,17 +59,20 @@ func BuildMobileUI(w fyne.Window) {
 
 	row := container.NewBorder(nil, nil, nil, checkBtn, input)
 
+	row1 := container.NewGridWithColumns(2,
+		container.NewMax(ui.Status),
+		container.NewMax(ui.LinkRSS),
+	)
+
 	content := container.NewVBox(
 		container.NewCenter(banner),
 		container.NewCenter(des),
-		hSep,
 		provinceSelect,
 		ui.DateSelect,
 		row,
-		hSep,
 		ui.ResultsLabel,
 		hSep,
-		ui.Status,
+		row1,
 	)
 
 	w.SetContent(container.NewScroll(content))
