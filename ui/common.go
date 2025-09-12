@@ -86,7 +86,7 @@ func CheckNumber(input string, ui *UIState, w fyne.Window) {
 }
 
 func IsSixDigitNumber(s string) bool {
-	if len(s) != 6 {
+	if len(s) != 6 || len(s) != 5 {
 		return false
 	}
 	for _, r := range s {
