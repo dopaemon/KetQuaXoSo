@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"KetQuaXoSo/internal/configs"
-	"KetQuaXoSo/internal/rss"
-	"KetQuaXoSo/utils"
+	"github.com/dopaemon/KetQuaXoSo/internal/configs"
+	"github.com/dopaemon/KetQuaXoSo/internal/rss"
+	"github.com/dopaemon/KetQuaXoSo/utils"
 
 	"github.com/charmbracelet/huh"
 )

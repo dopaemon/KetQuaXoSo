@@ -24,7 +24,6 @@ import (
 
 	"github.com/bytedance/sonic/internal/encoder/alg"
 	"github.com/bytedance/sonic/internal/encoder/ir"
-	"github.com/bytedance/sonic/internal/encoder/prim"
 	"github.com/bytedance/sonic/internal/encoder/vars"
 	"github.com/bytedance/sonic/internal/rt"
 )
@@ -184,7 +183,7 @@ func Execute(b *[]byte, p unsafe.Pointer, s *vars.Stack, flags uint64, prog *ir.
 			v := *(*json.Number)(p)
 			if v == "" {
 				buf = append(buf, '0')
-			} else if !alg.IsValidNumber(string(v)) {
+			} else if !rt.IsValidNumber(string(v)) {
 				return vars.Error_number(v)
 			} else {
 				buf = append(buf, v...)
@@ -243,13 +242,13 @@ func Execute(b *[]byte, p unsafe.Pointer, s *vars.Stack, flags uint64, prog *ir.
 				case reflect.Ptr, reflect.Map : it = convT2I(p, true, itab)
 				default                       : it = convT2I(p, !vt.Indirect(), itab)
 			}
-			if err := prim.EncodeTextMarshaler(&buf, *(*encoding.TextMarshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
+			if err := alg.EncodeTextMarshaler(&buf, *(*encoding.TextMarshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
 				return err
 			}
 		case ir.OP_marshal_text_p:
 			_, itab := ins.Vtab()
 			it := convT2I(p, false, itab)
-			if err := prim.EncodeTextMarshaler(&buf, *(*encoding.TextMarshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
+			if err := alg.EncodeTextMarshaler(&buf, *(*encoding.TextMarshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
 				return err
 			}
 		case ir.OP_map_write_key:
@@ -286,7 +285,7 @@ func Execute(b *[]byte, p unsafe.Pointer, s *vars.Stack, flags uint64, prog *ir.
 			}
 		case ir.OP_is_zero:
 			fv := ins.VField()
-			if prim.IsZero(p, fv) {
+			if alg.IsZero(p, fv) {
 				pc = ins.Vi()
 				continue
 			}
@@ -335,13 +334,13 @@ func Execute(b *[]byte, p unsafe.Pointer, s *vars.Stack, flags uint64, prog *ir.
 				case reflect.Ptr, reflect.Map : it = convT2I(p, true, itab)
 				default                       : it = convT2I(p, !vt.Indirect(), itab)
 			}
-			if err := prim.EncodeJsonMarshaler(&buf, *(*json.Marshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
+			if err := alg.EncodeJsonMarshaler(&buf, *(*json.Marshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
 				return err
 			}
 		case ir.OP_marshal_p:
 			_, itab := ins.Vtab()
 			it := convT2I(p, false, itab)
-			if err := prim.EncodeJsonMarshaler(&buf, *(*json.Marshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
+			if err := alg.EncodeJsonMarshaler(&buf, *(*json.Marshaler)(unsafe.Pointer(&it)), (flags)); err != nil {
 				return err
 			}
 		case ir.OP_unsupported:

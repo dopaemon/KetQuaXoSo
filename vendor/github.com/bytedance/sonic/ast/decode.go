@@ -25,9 +25,10 @@ import (
 	"github.com/bytedance/sonic/internal/native/types"
 	"github.com/bytedance/sonic/internal/rt"
 	"github.com/bytedance/sonic/internal/utils"
-	"github.com/bytedance/sonic/unquote"
 )
 
+// Hack: this is used for both checking space and cause friendly compile errors in 32-bit arch.
+const _Sonic_Not_Support_32Bit_Arch__Checking_32Bit_Arch_Here = (1 << ' ') | (1 << '\t') | (1 << '\r') | (1 << '\n')
 
 var bytesNull   = []byte("null")
 
@@ -39,13 +40,17 @@ const (
     bytesArray  = "[]"
 )
 
+func isSpace(c byte) bool {
+    return (int(1<<c) & _Sonic_Not_Support_32Bit_Arch__Checking_32Bit_Arch_Here) != 0
+}
+
 //go:nocheckptr
 func skipBlank(src string, pos int) int {
     se := uintptr(rt.IndexChar(src, len(src)))
     sp := uintptr(rt.IndexChar(src, pos))
 
     for sp < se {
-        if !utils.IsSpace(*(*byte)(unsafe.Pointer(sp))) {
+        if !isSpace(*(*byte)(unsafe.Pointer(sp))) {
             break
         }
         sp += 1
@@ -102,13 +107,13 @@ func decodeString(src string, pos int) (ret int, v string) {
         return ret, v
     }
 
-    result, err := unquote.String(src[pos:ret])
-    if err != 0 {
+    vv, ok := unquoteBytes(rt.Str2Mem(src[pos:ret]))
+    if !ok {
         return -int(types.ERR_INVALID_CHAR), ""
     }
 
     runtime.KeepAlive(src)
-    return ret, result
+    return ret, rt.Mem2Str(vv)
 }
 
 func decodeBinary(src string, pos int) (ret int, v []byte) {
@@ -544,7 +549,7 @@ func _DecodeString(src string, pos int, needEsc bool, validStr bool) (v string, 
             return str, p.p, true
         }
         /* unquote the string */
-        out, err := unquote.String(str)
+        out, err := unquote(str)
         /* check for errors */
         if err != 0 {
             return "", -int(err), true

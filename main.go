@@ -6,10 +6,10 @@ import (
 	"os"
 	"runtime"
 
-	"KetQuaXoSo/internal/configs"
-	"KetQuaXoSo/internal/api"
-	"KetQuaXoSo/utils"
-	"KetQuaXoSo/ui"
+	"github.com/dopaemon/KetQuaXoSo/internal/configs"
+	"github.com/dopaemon/KetQuaXoSo/internal/api"
+	"github.com/dopaemon/KetQuaXoSo/utils"
+	"github.com/dopaemon/KetQuaXoSo/ui"
 
 	"fyne.io/fyne/v2/app"
 	_ "fyne.io/fyne/v2/theme"

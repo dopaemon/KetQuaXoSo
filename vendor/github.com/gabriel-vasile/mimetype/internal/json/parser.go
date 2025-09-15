@@ -258,7 +258,7 @@ out:
 }
 
 func (p *parserState) consumeArray(b []byte, qs []query, lvl int) (n int) {
-	p.appendPath([]byte{'['}, qs)
+	p.currPath = append(p.currPath, []byte{'['})
 	if len(b) == 0 {
 		return 0
 	}
@@ -270,7 +270,7 @@ func (p *parserState) consumeArray(b []byte, qs []query, lvl int) (n int) {
 		}
 		if b[n] == ']' {
 			p.ib++
-			p.popLastPath(qs)
+			p.currPath = p.currPath[:len(p.currPath)-1]
 			return n + 1
 		}
 		innerParsed := p.consumeAny(b[n:], qs, lvl)
@@ -305,20 +305,6 @@ func queryPathMatch(qs []query, path [][]byte) int {
 	return -1
 }
 
-// appendPath will append a path fragment if queries is not empty.
-// If we don't need query functionality (just checking if a JSON is valid),
-// then we can skip keeping track of the path we're currently in.
-func (p *parserState) appendPath(path []byte, qs []query) {
-	if len(qs) != 0 {
-		p.currPath = append(p.currPath, path)
-	}
-}
-func (p *parserState) popLastPath(qs []query) {
-	if len(qs) != 0 {
-		p.currPath = p.currPath[:len(p.currPath)-1]
-	}
-}
-
 func (p *parserState) consumeObject(b []byte, qs []query, lvl int) (n int) {
 	for n < len(b) {
 		n += p.consumeSpace(b[n:])
@@ -340,7 +326,7 @@ func (p *parserState) consumeObject(b []byte, qs []query, lvl int) (n int) {
 		if keyLen := p.consumeString(b[n:]); keyLen == 0 {
 			return 0
 		} else {
-			p.appendPath(b[n:n+keyLen-1], qs)
+			p.currPath = append(p.currPath, b[n:n+keyLen-1])
 			if !p.querySatisfied {
 				queryMatched = queryPathMatch(qs, p.currPath)
 			}
@@ -382,12 +368,12 @@ func (p *parserState) consumeObject(b []byte, qs []query, lvl int) (n int) {
 		}
 		switch b[n] {
 		case ',':
-			p.popLastPath(qs)
+			p.currPath = p.currPath[:len(p.currPath)-1]
 			n++
 			p.ib++
 			continue
 		case '}':
-			p.popLastPath(qs)
+			p.currPath = p.currPath[:len(p.currPath)-1]
 			p.ib++
 			return n + 1
 		default:
@@ -401,9 +387,6 @@ func (p *parserState) consumeAny(b []byte, qs []query, lvl int) (n int) {
 	// Avoid too much recursion.
 	if p.maxRecursion != 0 && lvl > p.maxRecursion {
 		return 0
-	}
-	if len(qs) == 0 {
-		p.querySatisfied = true
 	}
 	n += p.consumeSpace(b)
 	if len(b[n:]) == 0 {
@@ -442,6 +425,9 @@ func (p *parserState) consumeAny(b []byte, qs []query, lvl int) (n int) {
 	}
 	if lvl == 0 {
 		p.firstToken = t
+	}
+	if len(qs) == 0 {
+		p.querySatisfied = true
 	}
 	if rv <= 0 {
 		return n

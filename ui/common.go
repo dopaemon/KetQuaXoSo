@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/url"
 
-	"KetQuaXoSo/internal/configs"
-	"KetQuaXoSo/internal/rss"
-	"KetQuaXoSo/utils"
+	"github.com/dopaemon/KetQuaXoSo/internal/configs"
+	"github.com/dopaemon/KetQuaXoSo/internal/rss"
+	"github.com/dopaemon/KetQuaXoSo/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"

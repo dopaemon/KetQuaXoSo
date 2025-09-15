@@ -1,5 +1,5 @@
-//go:build (amd64 && go1.16 && !go1.26) || (arm64 && go1.20 && !go1.26)
-// +build amd64,go1.16,!go1.26 arm64,go1.20,!go1.26
+//go:build (amd64 && go1.16 && !go1.25) || (arm64 && go1.20 && !go1.25)
+// +build amd64,go1.16,!go1.25 arm64,go1.20,!go1.25
 
 /**
  * Copyright 2024 ByteDance Inc.
@@ -61,6 +61,7 @@ func Valid(data []byte) (ok bool, start int) {
 
 var typeByte = rt.UnpackEface(byte(0)).Type
 
+//go:nocheckptr
 func Quote(buf []byte, val string, double bool) []byte {
 	if len(val) == 0 {
 		if double {
@@ -76,8 +77,6 @@ func Quote(buf []byte, val string, double bool) []byte {
 	}
 	sp := rt.IndexChar(val, 0)
 	nb := len(val)
-
-	buf = rt.GuardSlice2(buf, nb+1)
 	b := (*rt.GoSlice)(unsafe.Pointer(&buf))
 
 	// input buffer
@@ -105,9 +104,7 @@ func Quote(buf []byte, val string, double bool) []byte {
 		ret = ^ret
 		// update input buffer
 		nb -= ret
-		if nb > 0 {
-			sp = unsafe.Pointer(uintptr(sp) + uintptr(ret))
-		}
+		sp = unsafe.Pointer(uintptr(sp) + uintptr(ret))
 	}
 
 	runtime.KeepAlive(buf)

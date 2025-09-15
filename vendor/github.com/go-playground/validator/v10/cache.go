@@ -124,6 +124,7 @@ func (v *Validate) extractStructCache(current reflect.Value, sName string) *cStr
 	var customName string
 
 	for i := 0; i < numFields; i++ {
+
 		fld = typ.Field(i)
 
 		if !v.privateFieldValidation && !fld.Anonymous && len(fld.PkgPath) > 0 {
@@ -190,6 +191,7 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 			} else {
 				next, curr := v.parseFieldTagsRecursive(tagsVal, fieldName, t, true)
 				current.next, current = next, curr
+
 			}
 			continue
 		}
@@ -208,6 +210,7 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 		switch t {
 		case diveTag:
 			current.typeof = typeDive
+			continue
 
 		case keysTag:
 			current.typeof = typeKeys
@@ -216,6 +219,8 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 				panic(fmt.Sprintf("'%s' tag must be immediately preceded by the '%s' tag", keysTag, diveTag))
 			}
 
+			current.typeof = typeKeys
+
 			// need to pass along only keys tag
 			// need to increment i to skip over the keys tags
 			b := make([]byte, 0, 64)
@@ -223,6 +228,7 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 			i++
 
 			for ; i < len(tags); i++ {
+
 				b = append(b, tags[i]...)
 				b = append(b, ',')
 
@@ -232,6 +238,7 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 			}
 
 			current.keys, _ = v.parseFieldTagsRecursive(string(b[:len(b)-1]), fieldName, "", false)
+			continue
 
 		case endKeysTag:
 			current.typeof = typeEndKeys
@@ -249,15 +256,19 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 
 		case omitempty:
 			current.typeof = typeOmitEmpty
+			continue
 
 		case omitnil:
 			current.typeof = typeOmitNil
+			continue
 
 		case structOnlyTag:
 			current.typeof = typeStructOnly
+			continue
 
 		case noStructLevelTag:
 			current.typeof = typeNoStructLevel
+			continue
 
 		default:
 			if t == isdefault {

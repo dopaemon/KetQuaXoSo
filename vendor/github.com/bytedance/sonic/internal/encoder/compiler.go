@@ -287,12 +287,6 @@ func (self *Compiler) compileMapBody(p *ir.Program, sp int, vt reflect.Type) {
 }
 
 func (self *Compiler) compileMapBodyKey(p *ir.Program, vk reflect.Type) {
-	// followed as `encoding/json/emcode.go:resolveKeyName
-	if vk.Kind() == reflect.String {
-		self.compileString(p, vk)
-		return
-	}
-
 	if !vk.Implements(vars.EncodingTextMarshalerType) {
 		self.compileMapBodyTextKey(p, vk)
 	} else {

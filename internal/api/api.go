@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"time"
 
-	"KetQuaXoSo/internal/configs"
-	"KetQuaXoSo/internal/rss"
-	"KetQuaXoSo/utils"
+	"github.com/dopaemon/KetQuaXoSo/internal/configs"
+	"github.com/dopaemon/KetQuaXoSo/internal/rss"
+	"github.com/dopaemon/KetQuaXoSo/utils"
 
-	_ "KetQuaXoSo/docs"
+	_ "github.com/dopaemon/KetQuaXoSo/docs"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

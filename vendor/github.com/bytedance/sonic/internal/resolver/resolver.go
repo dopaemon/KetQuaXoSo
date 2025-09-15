@@ -21,7 +21,6 @@ import (
 	"reflect"
 	"strings"
 	"sync"
-    _ "unsafe"
 )
 
 type FieldOpts int
@@ -216,11 +215,4 @@ func ResolveStruct(vt reflect.Type) []FieldMeta {
     fm = resolveFields(vt)
     fieldCache[vt] = fm
     return fm
-}
-
-func handleOmitZero(fv StdField, fm *FieldMeta) {
-    if fv.omitZero {
-        fm.Opts |= F_omitzero
-        fm.IsZero = fv.isZero
-    }
 }

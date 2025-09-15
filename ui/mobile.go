@@ -3,7 +3,7 @@ package ui
 import (
 	"image/color"
 
-	"KetQuaXoSo/internal/configs"
+	"github.com/dopaemon/KetQuaXoSo/internal/configs"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"

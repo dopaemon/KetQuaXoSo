@@ -6,7 +6,7 @@ import (
 	_ "fmt"
 	"os"
 
-	_ "KetQuaXoSo/internal/configs"
+	_ "github.com/dopaemon/KetQuaXoSo/internal/configs"
 
 	"github.com/charmbracelet/fang"
 	"github.com/spf13/cobra"

@@ -3,8 +3,8 @@
 package main
 
 import (
-	"KetQuaXoSo/internal/configs"
-	"KetQuaXoSo/internal/api"
+	"github.com/dopaemon/KetQuaXoSo/internal/configs"
+	"github.com/dopaemon/KetQuaXoSo/internal/api"
 )
 
 func main() {

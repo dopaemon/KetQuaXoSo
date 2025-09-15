@@ -1,0 +1,14 @@
+Source: ketquaxoso
+Section: utils
+Priority: optional
+Maintainer: dopaemon <polarisdp@gmail.com>
+Build-Depends: debhelper-compat (= 13), dh-golang, golang-any
+Standards-Version: 4.6.2
+Homepage: https://github.com/dopaemon/KetQuaXoSo.git
+
+Package: ketquaxoso
+Architecture: amd64
+Depends: libgl1, libx11-6, libglfw3
+Description: Lottery result checker written in Go
+ A small command-line tool written in Go to fetch and check lottery results
+ from various Vietnamese provinces.

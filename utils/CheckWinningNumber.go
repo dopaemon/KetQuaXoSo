@@ -3,8 +3,8 @@ package utils
 import (
 	"strings"
 
-	"KetQuaXoSo/internal/configs"
-	"KetQuaXoSo/internal/rss"
+	"github.com/dopaemon/KetQuaXoSo/internal/configs"
+	"github.com/dopaemon/KetQuaXoSo/internal/rss"
 )
 
 func CheckWinningNumber(results []rss.Result, wdate, input string) (string, string) {

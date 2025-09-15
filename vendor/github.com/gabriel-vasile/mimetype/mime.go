@@ -103,17 +103,15 @@ func (m *MIME) match(in []byte, readLimit uint32) *MIME {
 		"text/html":  charset.FromHTML,
 		"text/xml":   charset.FromXML,
 	}
-	charset := ""
+	// ps holds optional MIME parameters.
+	ps := map[string]string{}
 	if f, ok := needsCharset[m.mime]; ok {
-		// The charset comes from BOM, from HTML headers, from XML headers.
-		// Limit the number of bytes searched for to 1024.
-		charset = f(in[:min(len(in), 1024)])
-	}
-	if m == root {
-		return m
+		if cset := f(in); cset != "" {
+			ps["charset"] = cset
+		}
 	}
 
-	return m.cloneHierarchy(charset)
+	return m.cloneHierarchy(ps)
 }
 
 // flatten transforms an hierarchy of MIMEs into a slice of MIMEs.
@@ -127,10 +125,10 @@ func (m *MIME) flatten() []*MIME {
 }
 
 // clone creates a new MIME with the provided optional MIME parameters.
-func (m *MIME) clone(charset string) *MIME {
+func (m *MIME) clone(ps map[string]string) *MIME {
 	clonedMIME := m.mime
-	if charset != "" {
-		clonedMIME = m.mime + "; charset=" + charset
+	if len(ps) > 0 {
+		clonedMIME = mime.FormatMediaType(m.mime, ps)
 	}
 
 	return &MIME{
@@ -142,11 +140,11 @@ func (m *MIME) clone(charset string) *MIME {
 
 // cloneHierarchy creates a clone of m and all its ancestors. The optional MIME
 // parameters are set on the last child of the hierarchy.
-func (m *MIME) cloneHierarchy(charset string) *MIME {
-	ret := m.clone(charset)
+func (m *MIME) cloneHierarchy(ps map[string]string) *MIME {
+	ret := m.clone(ps)
 	lastChild := ret
 	for p := m.Parent(); p != nil; p = p.Parent() {
-		pClone := p.clone("")
+		pClone := p.clone(nil)
 		lastChild.parent = pClone
 		lastChild = pClone
 	}
