@@ -57,7 +57,8 @@ ketquaxoso
 ---
 
 ## Docker (API Only)
-### Docker
+### Build
+#### Docker
 - Build Docker image:
 ```bash
 docker build -t kqxs-api .
@@ -66,10 +67,24 @@ docker build -t kqxs-api .
 ```bash
 docker run -d --name kqxs-api -p 8080:8080 -v $(pwd)/example.env:/app/.env:ro kqxs-api
 ```
-### Docker Composer
+#### Docker Composer
 - Build and run Docker Composer:
 ```bash
 docker compose up -d --build
+```
+### Using ghcr.io
+* [**READ MORE**](https://github.com/dopaemon/KetQuaXoSo/pkgs/container/ketquaxoso)
+* Pull Image Docker From Ghcr.io:
+```bash
+docker pull ghcr.io/dopaemon/ketquaxoso:alpine
+```
+* Run Container From Image From Ghcr.io:
+```bash
+docker run -d \
+	--name kqxs-api \
+	-p 8080:8080 \
+	-v $(pwd)/example.env:/app/.env:ro \
+	ghcr.io/dopaemon/ketquaxoso:alpine
 ```
 ---
 
