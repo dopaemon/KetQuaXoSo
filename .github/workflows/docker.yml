@@ -1,0 +1,25 @@
+name: Docker KetQuaXoSO
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-svc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout repository
+
+      - uses: pmorelli92/github-container-registry-build-push@2.2.1
+        name: Build and Publish latest service image
+        with:
+          github-push-secret: ${{secrets.GITHUB_TOKEN}}
+          docker-image-name: ketquaxoso
+          docker-image-tag: alpine
+          dockerfile-path: Dockerfile
+          build-context: .
+          build-only: false
+          docker-build-args: FOO=BAR,OTHER=VALUE
