@@ -30,6 +30,30 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 | [Download APK](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-android-universal.apk) | [Download EXE](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-windows-amd64.exe) | [Download TAR.GZ](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo.tar.gz) |
 |         |         | [Download Binary](https://github.com/dopaemon/KetQuaXoSo/releases/latest/download/KetQuaXoSo-linux-amd64) |
 
+## Linux Install
+### Request
+* **Debian Or Ubuntu Base**
+### Setup PPA
+* Add PPA:
+```bash
+curl -fsSL https://dopaemon.github.io/PPA/KEY.gpg | sudo gpg --dearmor -o /usr/share/keyrings/dopaemon.gpg
+```
+```bash
+echo "deb [signed-by=/usr/share/keyrings/dopaemon.gpg] https://dopaemon.github.io/PPA ./" | sudo tee /etc/apt/sources.list.d/dopaemon.list
+```
+* Update Package:
+```bash
+sudo apt-get update
+```
+### Install Package and Running:
+* Install KetQuaXoSo:
+```bash
+sudo apt-get install ketquaxoso -y
+```
+* Running KetQuaXoSo:
+```bash
+ketquaxoso
+```
 ---
 
 ## Docker (API Only)
