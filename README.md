@@ -151,6 +151,11 @@ make complete
 ├── SECURITY.md
 ├── assets
 │   └── Icon.png
+├── debian
+│   ├── changelog
+│   ├── control
+│   ├── copyright
+│   └── rules
 ├── docker-compose.yml
 ├── docs
 │   ├── docs.go
