@@ -33,6 +33,7 @@ Chương trình xem kết quả xổ số kiến thiết Việt Nam cho Android,
 ## Linux Install
 ### Request
 * **Debian Or Ubuntu Base**
+* **libgl1 libx11-6 libglfw3**
 ### Setup PPA
 * Add PPA:
 ```bash
@@ -46,6 +47,10 @@ echo "deb [signed-by=/usr/share/keyrings/dopaemon.gpg] https://dopaemon.github.i
 sudo apt-get update
 ```
 ### Install Package and Running:
+* Install Packages Request:
+```bash
+sudo apt-get install libgl1 libx11-6 libglfw3 -y
+```
 * Install KetQuaXoSo:
 ```bash
 sudo apt-get install ketquaxoso -y
