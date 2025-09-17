@@ -1,5 +1,6 @@
-ketquaxoso (0.0.1) UNRELEASED; urgency=medium
+ketquaxoso (0.0.1ubuntu1) UNRELEASED; urgency=medium
 
   * Initial release.
+  * Fix HyperLink layout
 
- -- dopaemon <polarisdp@gmail.com>  Mon, 15 Sep 2025 16:58:42 +0700
+ -- dopaemon <polarisdp@gmail.com>  Wed, 17 Sep 2025 08:55:04 +0700
