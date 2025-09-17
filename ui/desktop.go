@@ -8,6 +8,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -53,7 +54,10 @@ func BuildDesktopUI(w fyne.Window) {
 
 	row1 := container.NewGridWithColumns(2,
 		container.NewMax(ui.Status),
-		container.NewMax(ui.LinkRSS),
+		container.NewHBox(
+			layout.NewSpacer(),
+			ui.LinkRSS,
+		),
 	)
 
 	left := container.NewVBox(
