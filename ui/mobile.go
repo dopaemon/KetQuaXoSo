@@ -61,7 +61,10 @@ func BuildMobileUI(w fyne.Window) {
 
 	row1 := container.NewGridWithColumns(2,
 		container.NewMax(ui.Status),
-		container.NewMax(ui.LinkRSS),
+		container.NewHBox(
+			layout.NewSpacer(),
+			ui.LinkRSS,
+		),
 	)
 
 	content := container.NewVBox(
