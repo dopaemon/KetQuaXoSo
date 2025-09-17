@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	mygraph "github.com/dopaemon/KetQuaXoSo/internal/graphql"
 	"github.com/dopaemon/KetQuaXoSo/internal/configs"
 	"github.com/dopaemon/KetQuaXoSo/internal/rss"
 	"github.com/dopaemon/KetQuaXoSo/utils"
@@ -13,8 +14,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
+	_ "github.com/graphql-go/graphql"
+	"github.com/graphql-go/handler"
+
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+
 )
 
 // @title KetQuaXoSo API
@@ -198,6 +203,17 @@ func RunAPI() {
 		MaxAge:       12 * time.Hour,
 	}))
 
+	schema, err := mygraph.GetSchema()
+	if err != nil {
+		panic(err)
+	}
+
+	h := handler.New(&handler.Config{
+		Schema: &schema,
+		Pretty: true,
+		GraphiQL: true,
+	})
+
 	api := r.Group("/api")
 	api.Use(APIKeyAuth())
 	{
@@ -207,6 +223,14 @@ func RunAPI() {
 	}
 
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.PersistAuthorization(true))) /* */
+
+	r.POST("/graphql", func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	})
+
+	r.GET("/graphql", func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	})
 
 	r.Run(":" + configs.Port)
 }
