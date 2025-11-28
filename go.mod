@@ -10,8 +10,6 @@ require (
 	github.com/charmbracelet/huh v0.7.0
 	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-gonic/gin v1.10.1
-	github.com/graphql-go/graphql v0.8.1
-	github.com/graphql-go/handler v0.2.4
 	github.com/joho/godotenv v1.5.1
 	github.com/spf13/cobra v1.10.1
 	github.com/swaggo/files v1.0.1
